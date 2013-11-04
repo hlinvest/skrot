@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+{% block title %} Register {% endblock%}
+{% block content %}
+<div class="form">
+	<form action="" method="post">
+	{% csrf_token %} <!-- it is a secrete user side specified token in all form submission and side-effect URLs to prevent cross site request forgeries -->
+	<!--  we can use form.as_p here but the field names will be in English and there will be only one password field. adn password is viewable.-->
+		{% if form.company.errors %}  <div class="error">{{form.company.errors}}</div>  {%endif%}
+		<p><label for="virksomhed" >Virksomhed:</label> {{form.company}}</p>
+		
+		{% if form.cvr.errors %}  <div class="error">skriv en gyldig cvr nr</div>  {%endif%}
+		<p><label for="id_cvr">CVR:</label> {{form.cvr}}</p>
+		
+		{% if form.username.errors %}  <div class="error">{{form.username.errors}}</div>  {%endif%}
+		<p><label for="username" >Brugernavn(uden mellemrum):</label> {{form.username}}</p>
+		
+		{% if form.password.errors %}  <div class="error">skriv en gyldig password</div>  {%endif%}
+		<p><label for="password">Password:</label> {{form.password}} </p>
+		
+		{% if form.password2.errors %}  <div class="error">to password er ikke ens</div>  {%endif%}
+		<p><label for="id_password2">Gentast password:</label> {{form.password2}}</p>
+		
+		{% if form.email.errors %}  <div class="error">skriv en gyldig email</div>  {%endif%}
+		<p><label for="id_email">Email:</label> {{form.email}}</p>
+		
+		{% if form.tlf.errors %}  <div class="error">skriv en gyldig telefon nr</div>  {%endif%}
+		<p><label for="id_tlf">Telefon:</label> {{form.tlf}}</p>
+		
+		{% if form.street.errors %}  <div class="error">skriv en gyldig adresse</div>  {%endif%}
+		<p><label for="id_address">Addresse:</label> {{form.street}}</p>
+		
+		{% if form.postcode.errors %}  <div class="error">skriv en korrekt postnummer </div>  {%endif%}
+		<p><label for="id_city">Post nummer:</label> {{form.postcode}}</p>
+		
+		{% if form.city.errors %}  <div class="error">skriv en gyldig bynavn</div>  {%endif%}
+		<p><label for="id_city">By:</label> {{form.city}}</p>
+		
+		{% if form.area.errors %}  <div class="error">vælg et gyldigt område </div>  {%endif%}
+		<p><label for="id_area">Område:</label> {{form.amt}}</p>
+		
+		
+		<p><label for="id_description">Beskriv lidt om værkstedet:</label></p>
+		<p> {{form.description}}</textarea></p>
+		
+		{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
+		<input type="submit" alt="register", value="register">
+		
+	</form>
+</div>
+{% endblock%}

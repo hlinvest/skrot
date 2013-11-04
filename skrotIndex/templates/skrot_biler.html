@@ -1,0 +1,24 @@
+{% extends 'index.html' %} 
+{% block title %}
+Find biler der vil sælges til skrot handler
+{% endblock %}
+		
+{% block content %}	
+  <h1>Biler i  {% if area %} {{area}} {%else%} Danmark {% endif %}</h1>
+<table >
+<tr>
+	<th>Mærk</th>
+	<th>Årgang</th>
+	<th>By</th>
+	<th>Billede</th>
+</tr>	
+{% for c in car %}
+ <tr>
+   		<td><a href="/bil/{{c.id}}/">{{ c.brand}}</a></td>
+	    <td>{{c.year}}</td>
+	    <td>{{c.city}}</td>
+	    <td><img src="{{MEDIA_URL}}{{c.picture}}" width="50" height="50"></td>
+  </tr>
+{% endfor %}
+</table>      
+{% endblock %}

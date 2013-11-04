@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+{% block title %}
+Få den højste byd på din bil fra autohuggerne 
+{% endblock %}
+</title>
+<link href="{{STATIC_URL}}style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="all">
+ 	<div class="headerOne">
+    </div>
+	<div class="con">
+        <div class="headTwo">
+          <h1>SkrotIndex.dk </h1></div>
+        <div class="menu">
+        <a href='/'> Velkommen &nbsp;&nbsp;</a>   <a href="/skrot/"> Skrot din bil &nbsp;&nbsp;</a> <a href="">Hjælp &nbsp;&nbsp;</a>
+          <a href='/biler/' align="right"> Biler til at byde &nbsp;&nbsp;</a><br>
+		{% if user.is_authenticated %}<a href="/profil/">Profil &nbsp;&nbsp;</a><a href="/logud/"> Log ud &nbsp;&nbsp;</a> 
+			<a href="/profile/addJob/">&nbsp;&nbsp;</a>
+			
+		{%else%} <a href='/login/'> Login &nbsp;&nbsp;</a> 
+		<a href='/register/'> Registrer &nbsp;&nbsp;</a>
+		{% endif %}
+		</div>
+		<br>
+		{% block typemenu %}
+        <div class="AutoOphugger">
+        <ul id="nav">
+	        {% for a in all_areas %}
+	        	<li><a href= "/auto_ophugger/{{a.area}}/">{{a.area}}</a></li>
+	        {% endfor %}
+	     </ul>
+        </div>
+        {% endblock %}
+	
+        
+  <div class="leftside">		
+{% block content %}	
+  <h1>Auto ophugger i  {% if area %}i {{area}} {%else%} Danmark {% endif %}</h1>
+<table >
+<tr>
+	<th>Auto ophugger</th>
+	<th>Adresse</th>
+	<th>By</th>
+	<th>Telefon</th>
+</tr>	
+{% for a in ao %}
+ <tr>
+   		<td><a href="ophugger/{{ao.id}}/">{{a.company}}</a></td>
+	    <td>{{a.street}}</td>
+	    <td>{{a.city}}</td>
+	    <td>{{a.tlf}}</td>
+  </tr>
+{% endfor %}
+</table>      
+{% endblock %}
+</div>
+<div class="rigthside">
+{% block right%}
+
+{% endblock %}
+        </div>
+        <div class="button"> @ Copyright 2013 beta version</div>
+	</div>
+</div>
+</body>
+</html>

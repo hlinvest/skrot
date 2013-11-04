@@ -1,0 +1,25 @@
+
+{% extends "index.html"%}
+{% block title %}
+login
+{% endblock %}
+{%block content %}
+Log ind på din konto her:
+<h3>{{text}}</h3>
+<div class="form">
+<form action="" method="post">
+{% csrf_token%}
+	
+	 {% if form.username.errors%}<div class="error">{{form.username.errors}}</div> {% endif%}
+	<p><label for="username"}>Brugernavn: </label>{{form.username}}</p>
+	
+	 {% if form.password.errors%}<div class="error"> {{form.password.errors}}</div> {% endif%}
+	<p><label for="password">Password: </label>{{form.password}}</p>
+	
+	<p>Glemt dit kodeord? <a href= "/resetpassword/">Tryk her</a></p>
+	
+	<input type="submit" value="Login">
+</form>
+</div>
+
+{% endblock %}

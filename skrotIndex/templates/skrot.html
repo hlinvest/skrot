@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+{% block title %} Register {% endblock%}
+{% block content %}
+{{text}}
+<div class="form">
+	<form action="" method="post">
+	{% csrf_token %} <!-- it is a secrete user side specified token in all form submission and side-effect URLs to prevent cross site request forgeries -->
+	<!--  we can use form.as_p here but the field names will be in English and there will be only one password field. adn password is viewable.-->
+		{% if form.plate.errors %}  <div class="error">Skriv en korrekt nummer plader</div>  {%endif%}
+		<p><label for="nummer plader" >Nummer plader:</label> {{form.plate}}</p>
+		
+		{% if form.year.errors %}  <div class="error">skriv hvilke årgang er bilen fra</div>  {%endif%}
+		<p><label for="årgang">Årgang:</label> {{form.year}}</p>
+		
+		{% if form.brand.errors %}  <div class="error">skriv en gyldig bilmærk</div>  {%endif%}
+		<p><label for="password">Mærker:</label> {{form.brand}} </p>
+		
+		{% if form.adress.errors %}  <div class="error">hvor befinder bilen </div>  {%endif%}
+		<p><label for="id_password2">Hvor er bilen:</label> {{form.address}}</p>
+		
+		{% if form.city.errors %}  <div class="error">Hvilken by i Danmark</div>  {%endif%}
+		<p><label for="id_by">By:</label> {{form.city}}</p>
+		
+		{% if form.pickup.errors %}  <div class="error">makér eller lad være</div>  {%endif%}
+		<p><label for="afhentning">Afhentning:</label> {{form.pickup}}</p>
+		
+		{% if form.email.errors %}  <div class="error">skriv en gyldig email</div>  {%endif%}
+		<p><label for="email">Kontakt email:</label> {{form.email}}</p>
+		
+		{% if form.tlf.errors %}  <div class="error">skriv en gyldig telefon nummer</div>  {%endif%}
+		<p><label for="telefon nummer">Telefon nummer:</label> {{form.tlf}}</p>
+		
+		{% if form.duration.errors %}  <div class="error">Hvor lang tid skal den være på aktion</div>  {%endif%}
+		<p><label for="dage">Hvor mange dage skal aktion være:</label> {{form.duration}}</p>
+		
+		{% if form.picture.errors %}  <div class="error">upload et gyldig billede</div>  {%endif%}
+		<p><label for="bilbillede">Billede på bilen:</label> {{form.picture}}</p>
+		
+		<p><label for="hvilke område">Hvilke område skal ophugger være for at byde på:</label></p>
+		<p> {{form.bid_area}}</p>
+		
+		{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
+		<input type="submit" alt="set på aktion", value="register">
+		
+	</form>
+</div>
+
+{% endblock%}

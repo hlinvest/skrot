@@ -1,0 +1,44 @@
+{% extends 'index.html'%}
+{% block title %}
+byd på {{car.brand}}fra {{car.year}}
+{% endblock %}
+		
+{% block content %}	
+  <h1>byd på {{car.brand}} fra {{car.year}}</h1>
+<div class="bil info" align="left">
+<table >
+	<tr><td>Nummerplad</td> <td>{{car.plate}}</td></tr>
+	<tr><td>Mærk</td><td>{{car.brand}}</td></tr>
+	<tr><td>Årgang</td> <td>{{car.year}}</td></tr>
+	<tr><td>Adresse</td> <td>{{car.address}}</td></tr>
+	<tr><td>By</td> <td>{{car.city}}</td></tr>
+	<tr><td>Ønsket af pickup</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
+
+
+</table>     
+</div>
+ 
+<div class="billede" align="right">
+<td><img src="{{MEDIA_URL}}{{c.picture}}" width="200" height="150"></td></div>
+
+<div class="aktion">
+
+Den aktion started {{car.start_time }} slutter {{car.end_time}} 
+<table>
+		<tr><th>Auto ophugger</th> <th>Bud</th> <th>Pris</th></tr>
+	{% if not bid %}
+	{% else %}
+		{% for b in bid %}
+			<tr><td>Auto ophugger</td> <td>Bud</td> <td>Pris</td></tr>
+		{% endfor %}
+	{% endif %}
+</table>
+{% if user.is_authenticated %}
+	<form action="" method="post">
+		<input type="submit" alt="register", value="register">
+	</form>
+{% else %}
+	<h3> Log ind og giv en bud.</h3>
+{% endif %}
+</div>
+{% endblock %}

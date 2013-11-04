@@ -1,0 +1,30 @@
+{% extends "index.html"%}
+
+{% block title %}
+{{company.company}}s profil
+{% endblock %}
+
+{% block content %}
+<h2>Hey, {{company.username}}</h2>
+
+{{company.email}}
+
+{% if not company.picture %}
+{% else%}
+<img src="{{MEDIA_URL}}{{company.picture}}" width="200" height="150">
+
+{% endif %}
+</br>
+	<a href="/redigere_profil/{{company.slug}}/"> Rediger din virksomhed profil her</a></Br>
+	<a href="/edit_pic/{{company.slug}}/"> Rediger dit profil billede her</a> </br>
+	 
+ {% endblock %}
+ 
+ {% block right %}
+ <h2> alle dine byder:</h2>
+ {% for b in bid %}
+ {{b.car}}
+ {{ b.price}}
+ {%endfor%} 
+ {% endblock %}
+ 
