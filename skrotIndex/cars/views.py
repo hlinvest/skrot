@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-  
-from cars.forms import CarForm
-from ao.models import Area, Bid
+from cars.forms import CarForm, BidForm
+from ao.models import Area, Bid, AO
 from cars import models
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from cars.models import BidArea, Car
 from datetime import datetime,timedelta
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import ao
 
 def skrot(request):
     if request.method=='POST':
@@ -40,19 +42,41 @@ def skrot(request):
         return render_to_response('skrot.html', {'form':form, 'text': 'indtaste bilens information her.'}, context_instance=RequestContext(request))
     
 def biler(request, area=None):
+    
     if area is None:
-        car=Car.objects.all()
+        car_list=Car.objects.filter(end_time__gte =datetime.now())
+        paginator = Paginator(car_list, 25)
     else:
         ar=Area.objects.get(area=area)
-        car=Car.objects.filter( area=ar).order_by('start_time')     
-#    paginator=Paginator(jobs, 2)
-#    page=request.GET.get('page')
-#    try:
-        
+        car_list=Car.objects.filter(bid_area=ar,end_time__gte =datetime.now()).order_by('start_time') 
+    page = request.GET.get('page')
+    try:
+        car= paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        car = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        car = paginator.page(paginator.num_pages)
+
     return render_to_response('skrot_biler.html', {'car':car, 'area':area}, context_instance=RequestContext(request))
 
 def bil(request,id):
     car=Car.objects.get(pk=id)
-    bid=Bid.objects.filter(car=id).order_by('end_time')
-    return render_to_response('bil.html', {'car':car,'bid':bid}, context_instance=RequestContext(request))
+    bid=Bid.objects.filter(car=id).order_by('price')
+    a=AO.objects.get(id=request.user.id)
+    print car.id
+    if request.method=='POST':
+        form=BidForm(request.POST, initial={'car':car} )
+        if form.is_valid():
+            b=ao.models.Bid(car=car,ao=a,price=form.cleaned_data['price'])
+            b.save()
+            return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
+        else:
+            print "havn't save the bid"
+            return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
+            
+    else:
+        form=BidForm(initial={'car':id} )
+        return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
 

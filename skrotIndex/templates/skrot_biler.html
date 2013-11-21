@@ -2,6 +2,15 @@
 {% block title %}
 Find biler der vil sælges til skrot handler
 {% endblock %}
+{% block typemenu %}
+      <div class="AutoOphugger">
+        <ul id="nav">
+	        {% for a in all_areas %}
+	        	<li><a href= "/biler/{{a.area}}/">{{a.area}}</a></li>
+	        {% endfor %}
+	     </ul>
+        </div>
+ {% endblock %}
 		
 {% block content %}	
   <h1>Biler i  {% if area %} {{area}} {%else%} Danmark {% endif %}</h1>
@@ -17,8 +26,26 @@ Find biler der vil sælges til skrot handler
    		<td><a href="/bil/{{c.id}}/">{{ c.brand}}</a></td>
 	    <td>{{c.year}}</td>
 	    <td>{{c.city}}</td>
-	    <td><img src="{{MEDIA_URL}}{{c.picture}}" width="50" height="50"></td>
+	    {% if not c.picture %}
+	    {% else %}
+	    	<td><img src="{{MEDIA_URL}}{{c.picture}}" width="50" height="50"></td>
+	    {% endif %}
   </tr>
 {% endfor %}
-</table>      
+</table> 
+<div class="pagination">
+    <span class="step-links">
+        {% if car.has_previous %}
+            <a href="?page={{ car.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ car.number }} of {{ car.paginator.num_pages }}.
+        </span>
+
+        {% if car.has_next %}
+            <a href="?page={{ car.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>     
 {% endblock %}

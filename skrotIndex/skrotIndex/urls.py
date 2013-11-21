@@ -3,7 +3,7 @@ from django.contrib import admin
 from skrotIndex import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns('ao.views',
     # url(r'^skrotIndex/', include('skrotIndex.foo.urls')),
@@ -11,12 +11,12 @@ urlpatterns = patterns('ao.views',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls)),
     (r'^$', 'index'),
     (r'^register/$','register'),  
     (r'^login/$','userLogin'),
     (r'^profil/$','profile'),
-    (r'^redigere_profil/$','eidtProfile'),
+    (r'^redigere_profil/$','editProfile'),
     (r'^logud/$','userLogout'),
     (r'^auto_ophugger/(?P<area>[\w|\W]+)/$', 'index'),
     
@@ -25,7 +25,12 @@ urlpatterns+=patterns('cars.views',
             url(r'^skrot/$','skrot'),
             (r'^biler/(?P<area>[\w|\W]+)/$', 'biler'),
             (r'^biler/$', 'biler'),
-            (r'^bil/(?P<id>.*)/$', 'bil'),
+            (r'^bil/(?P<id>.*)/$', 'bil'),    
     
-    
-)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+staticfiles_urlpatterns()
+)
+urlpatterns+=patterns('',
+     url(r'^resetpassword/$', 'django.contrib.auth.views.password_reset'),
+     (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+     (r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done'),
+     (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
+     )+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+staticfiles_urlpatterns()

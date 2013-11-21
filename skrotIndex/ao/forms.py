@@ -4,14 +4,20 @@ from django import forms
 from ao.models import AO, Area
 
 class RegiForm(ModelForm):
+    username=forms.RegexField(
+        label=(u"username"), max_length=30, regex=r"^[\w.@+-]+$",
+        help_text = ("Required. 30 characters or fewer. Letters, digits and "
+                      "@/./+/-/_ only."),
+        error_messages = {
+            'invalid': ("This value may contain only letters, numbers and "
+                         "@/./+/-/_ characters.")})
+#    username = forms.CharField()
     password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
     password2=forms.CharField(label=(u'password2'), widget=forms.PasswordInput(render_value=False))
-    amt=forms.ModelChoiceField(queryset=Area.objects.all())
-    street=forms.CharField(max_length=40)
     
     class Meta:
         model=AO
-        exclude=('picture','last_login', 'bid','slug','date_joined','area')
+        exclude=('picture','last_login', 'bid','slug','date_joined')
         
     def clean_username(self):
         username=self.cleaned_data['username']
@@ -44,12 +50,12 @@ class RegiForm(ModelForm):
             return self.cleaned_data                                                                             # this method has access too all the fields in the class, so it must return all the fields instead of one.        
         raise forms.ValidationError('to indtastede passsword er ikke ens')
 
-class LoginForm(forms.Form):                                                                                      
+class LoginForm(forms.Form):  
+                                                                                          
         username=forms.CharField(label=(u'username'))
         password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
         
 class ChangeProfile(RegiForm):
-    picture= forms.FileField(required=False)
     def clean_email(self):
         print 'the existed email is '+ self.existed_email
         email=self.cleaned_data['email']

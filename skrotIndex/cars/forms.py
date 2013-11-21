@@ -30,17 +30,37 @@ class CarForm(ModelForm):
         else:
             return None
         
-class BidForm(ModelForm):
-    class Meta:
-        model=Bid
-    def cleaned_picture(self):
+class BidForm(forms.Form):
+    car=forms.CharField()
+    price=forms.IntegerField()
+    def clean_price(self):
         price= self.cleaned_data['price']
         carID= self.cleaned_data['car']
-        max_price=Bid.objects.filter(car=carID).aggregate(Max('price'))
-        if price< max_price:
-            raise forms.ValidationError('der er allerede en der byder højere end dig')
+        max_price=Bid.objects.filter(car=carID).aggregate(Max('price'))+50
+    
+        if price<max_price:
+            raise forms.ValidationError('der er allerede en der byder højere end dig, eller du skal byde minimum 50 kroner højere end hjøst byd.')
         else:
             return price
+            
+    
+    
+        
+#class BidForm(ModelForm):
+#    car=forms.CharField()
+#    class Meta:
+#        model=Bid
+#        exclude=('ao')
+#    def cleaned_car(self):
+#        return self.cleaned_data['car']
+#    def cleaned_price(self):
+#        price= self.cleaned_data['price']
+#        carID= self.cleaned_data['car']
+#        max_price=Bid.objects.filter(car=carID).aggregate(Max('price'))
+#        if price< max_price:
+#            raise forms.ValidationError('der er allerede en der byder højere end dig')
+#        else:
+#            return price
             
         
     

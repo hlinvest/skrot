@@ -5,6 +5,7 @@ edigere {{company.company}}s profil
 {% endblock %}
 
 {% block content %}
+{{text}}
 <div class="form">
 	<form action="" method="post" enctype="multipart/form-data" >
 	{% csrf_token %} 
@@ -34,14 +35,13 @@ edigere {{company.company}}s profil
 		<p><label for="id_city">By:</label> {{form.city}}</p>
 		
 		{% if form.area.errors %}  <div class="error">vælg et gyldigt område </div>  {%endif%}
-		<p><label for="id_area">Område:</label> {{form.amt}}</p>
+		<p><label for="id_area">Område:</label> {{form.area}}</p>
 		
 		
 		<p><label for="id_description">Beskriv lidt om værkstedet:</label></p>
 		<p> {{form.description}}</textarea></p>
 		
 		{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
-		<input type="submit" alt="register", value="register">
 	 
 		<p><input type="submit" alt="Ændre", value="Ændre"></p>
 		</form>

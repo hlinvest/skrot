@@ -29,10 +29,10 @@ def register(request):
     if request.method=='POST': 
         form=RegiForm(request.POST )
         if form.is_valid():
-            ar=Area.objects.get(area=form.cleaned_data['amt'])
+            ar=Area.objects.get(area=form.cleaned_data['area'])
             ao=models.AO(username=form.cleaned_data['username'],company=form.cleaned_data['company'], email=form.cleaned_data['email'], description=form.cleaned_data['description'],
                            cvr=form.cleaned_data['cvr'],  street=form.cleaned_data['street'], postcode=form.cleaned_data['postcode'],
-                           city=form.cleaned_data['city'], area=ar, tlf=form.cleaned_data['tlf'], is_active=True, is_superuser=False)
+                           city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], is_active=True, is_superuser=False)
             ao.set_password( form.cleaned_data['password'])    
                   
             ao.save()
@@ -81,9 +81,12 @@ def profile(request):
 @login_required
 def editProfile(request):
         ao=AO.objects.get(id=request.user.id)
-        form=ChangeProfile(request.POST,request.FILES,initial={'username':ao.username, 'company':ao.company, 'email':ao.email,
+#        area=Area.objects.get(area=ao.area)
+#        print area.id
+        print ao.area.id
+        form=ChangeProfile(initial={'username':ao.username, 'company':ao.company, 'email':ao.email,
                                     'cvr':ao.cvr,'street':ao.street, 'postcode':ao.postcode,'city':ao.city, 'area':ao.area,
-                                    'tlf':ao.tlf,'is_active':ao.is_active,'description':ao.description, 'picture':ao.picture})
+                                    'tlf':ao.tlf,'is_active':ao.is_active,'description':ao.description})
       
         if request.method=='POST':
             if form.is_valid():
@@ -92,7 +95,7 @@ def editProfile(request):
             else:     
                 return render_to_response('editprofile.html',{'ao':ao, 'form':form}, context_instance=RequestContext(request))             
         else:          
-            return render_to_response('edit.html',{'ao':ao, 'form':form}, context_instance=RequestContext(request))
+            return render_to_response('editprofile.html',{'ao':ao, 'form':form}, context_instance=RequestContext(request))
     
 @login_required
 def saveChange(ao, form):
@@ -107,5 +110,4 @@ def saveChange(ao, form):
     ao.tlf=form.cleaned_data['tlf']
     ao.is_active=form.cleaned_data['is_active']
     ao.description=form.cleaned_data['description']
-    ao.picture=form.cleaned_data['picture']
     ao.save()

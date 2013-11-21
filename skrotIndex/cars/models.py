@@ -18,7 +18,7 @@ class Car(models.Model):
         bid_area=models.ManyToManyField('ao.Area',through='BidArea')
         
         def save(self,*args,**kwargs):
-            self.slug=slugify(self.plate)                                   #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
+            self.slug=slugify(self.plate)                                                           #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
             super(Car,self).save(*args, **kwargs) 
             
         def __unicode__(self):
@@ -37,7 +37,6 @@ class SoldCar(models.Model):
         brand=models.CharField(max_length=40)
         address=models.CharField(max_length=40, null=True)
         city=models.CharField(max_length=40)
-        area=models.ForeignKey('ao.Area',null=True, on_delete=models.SET_NULL)
         pickup=models.BooleanField()
         email=models.CharField(max_length=50)
         tlf=models.IntegerField(null=True)

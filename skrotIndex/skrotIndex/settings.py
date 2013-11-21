@@ -22,6 +22,8 @@ DATABASES = {
         'PORT': '3306',                      # Set to empty string for default.
     }
 }
+DATABASE_OPTIONS = { "init_command": "SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED", }
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -99,6 +101,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -112,7 +115,7 @@ ROOT_URLCONF = 'skrotIndex.urls'
 WSGI_APPLICATION = 'skrotIndex.wsgi.application'
 
 TEMPLATE_DIRS = (
-  os.path.join(SITE_ROOT, 'templates')
+  os.path.join(SITE_ROOT, 'templates'),
 )
 TEMPLATE_CONTEXT_PROCESSORS = ('skrotIndex.context_processor.all_areas','django.contrib.auth.context_processors.auth' ,
                                "django.core.context_processors.debug","django.core.context_processors.i18n",
@@ -125,9 +128,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'django.contrib.admin',
      'cars',
      'ao',
+     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

@@ -1,4 +1,4 @@
-{% extends 'index.html'%}
+{% extends 'skrot_biler.html'%}
 {% block title %}
 byd på {{car.brand}}fra {{car.year}}
 {% endblock %}
@@ -25,17 +25,23 @@ byd på {{car.brand}}fra {{car.year}}
 
 Den aktion started {{car.start_time }} slutter {{car.end_time}} 
 <table>
-		<tr><th>Auto ophugger</th> <th>Bud</th> <th>Pris</th></tr>
+		<tr><th>Auto ophugger</th>  <th>Pris</th></tr>
 	{% if not bid %}
 	{% else %}
 		{% for b in bid %}
-			<tr><td>Auto ophugger</td> <td>Bud</td> <td>Pris</td></tr>
+			<tr><td>{{b.ao.company}}</td>  <td>{{b.price}}</td></tr>
 		{% endfor %}
 	{% endif %}
 </table>
 {% if user.is_authenticated %}
 	<form action="" method="post">
-		<input type="submit" alt="register", value="register">
+			{% csrf_token %}
+			 {% if form.price.errors%}<div class="error">{{form.price.errors}}</div> {% endif%}
+			<p><label for=pris">Pris: </label> {{form.price}}</p>
+			
+			{{form.car.as_hidden}}
+			{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
+			<input type="submit" alt="register", value="Byd">
 	</form>
 {% else %}
 	<h3> Log ind og giv en bud.</h3>
