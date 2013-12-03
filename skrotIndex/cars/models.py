@@ -10,7 +10,7 @@ class Car(models.Model):
         address=models.CharField(max_length=40, null=True)
         city=models.CharField(max_length=40)
         pickup=models.BooleanField()
-        email=models.CharField(max_length=50)
+        email=models.EmailField(max_length=75)
         tlf=models.IntegerField(null=True)
         start_time=models.DateTimeField()
         picture=models.ImageField(upload_to='media/carPictures',null=True)

@@ -18,9 +18,9 @@ Få den højste byd på din bil fra autohuggerne
         <div class="headTwo">
           <h1>SkrotIndex.dk </h1></div>
         <div class="menu">
+        <a href='/'>Find auto ophuggerne</a>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          <a href='/biler/' > Biler til at byde &nbsp;&nbsp;</a></br>
         <a href='/'> Velkommen &nbsp;&nbsp;</a>   <a href="/skrot/"> Skrot din bil &nbsp;&nbsp;</a> <a href="">Hjælp &nbsp;&nbsp;</a>
-          <a href='/biler/' align="right"> Biler til at byde &nbsp;&nbsp;</a><br>
-		{% if user.is_authenticated %}<a href="/profil/">Profil &nbsp;&nbsp;</a><a href="/logud/"> Log ud &nbsp;&nbsp;</a> 
+		{% if user.is_authenticated %}<a href="/profil/">Profil &nbsp;&nbsp;</a><a href="/logud/"> Log ud &nbsp;&nbsp;</a> <a href="/vil_du_slet_profil/"> slet din profil</a>
 			<a href="/profile/addJob/">&nbsp;&nbsp;</a>
 			
 		{%else%} <a href='/login/'> Login &nbsp;&nbsp;</a> 
@@ -31,6 +31,7 @@ Få den højste byd på din bil fra autohuggerne
 		{% block typemenu %}
         <div class="AutoOphugger">
         <ul id="nav">
+        	<li><a href="/auto_ophugger/">Hele Danmark</a></li>
 	        {% for a in all_areas %}
 	        	<li><a href= "/auto_ophugger/{{a.area}}/">{{a.area}}</a></li>
 	        {% endfor %}
@@ -51,7 +52,7 @@ Få den højste byd på din bil fra autohuggerne
 </tr>	
 {% for a in ao %}
  <tr>
-   		<td><a href="ophugger/{{ao.id}}/">{{a.company}}</a></td>
+   		<td><a href="/ophugger/{{a.id}}/">{{a.company}}</a></td>
 	    <td>{{a.street}}</td>
 	    <td>{{a.city}}</td>
 	    <td>{{a.tlf}}</td>

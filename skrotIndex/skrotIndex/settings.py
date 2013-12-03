@@ -24,11 +24,15 @@ DATABASES = {
 }
 DATABASE_OPTIONS = { "init_command": "SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED", }
 
+CRON_CLASSES = [
+    "cars.cron.MyCronJob",
+    # ...
+]
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
-MAX_PIC_SIZE=200000
+MAX_PIC_SIZE=1500000
 
 
 
@@ -131,6 +135,7 @@ INSTALLED_APPS = (
      'cars',
      'ao',
      'django.contrib.admin',
+     "django_cron",
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

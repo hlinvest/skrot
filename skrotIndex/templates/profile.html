@@ -16,15 +16,17 @@
 {% endif %}
 </br>
 	<a href="/redigere_profil/"> Rediger din virksomhed profil her</a></Br>
-	<a href="/edit_pic/"> Rediger dit profil billede her</a> </br>
+	<a href="/redigere_profile_billede/"> Rediger eller tilføje et billede for din virksomhed</a> </br>
 	 
  {% endblock %}
  
  {% block right %}
- <h2> alle dine byder:</h2>
+ <h2> Dine buder:</h2>
  {% for b in bid %}
  {{b.car}}
+ {{b.car.brand}}
  {{ b.price}}
+ <a href="/bekraeft_slet_bud/{{b.id}}">slet den bud</a>
  {%endfor%} 
  {% endblock %}
  

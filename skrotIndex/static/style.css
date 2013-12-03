@@ -44,6 +44,10 @@ a:active {color:#0000FF;}
 	padding-left: 8px;
 	border-left-width: 0px;
 }
+.all.con.menu.rightlink{
+	text-align: right;
+}
+
 #nav {
 	width: 100%;
 	float: left;

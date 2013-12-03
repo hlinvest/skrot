@@ -3,7 +3,7 @@
 {% block content %}
 {{text}}
 <div class="form">
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data" >
 	{% csrf_token %} <!-- it is a secrete user side specified token in all form submission and side-effect URLs to prevent cross site request forgeries -->
 	<!--  we can use form.as_p here but the field names will be in English and there will be only one password field. adn password is viewable.-->
 		{% if form.plate.errors %}  <div class="error">Skriv en korrekt nummer plader</div>  {%endif%}

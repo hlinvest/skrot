@@ -16,6 +16,13 @@ class CarForm(ModelForm):
     class Meta:
         model=Car
         exclude=('slug','start_time','end_time')
+    def clean_plate(self):
+        plate=self.cleaned_data['plate']
+        p=Car.objects.get(plate=plate)
+        if p is not None:
+            raise forms.ValidationError('der er en som er regiteret med den nummerplade på vores side.')
+        else:
+            return plate
         
     def clean_picture(self):
         picture=self.cleaned_data['picture']
@@ -36,10 +43,12 @@ class BidForm(forms.Form):
     def clean_price(self):
         price= self.cleaned_data['price']
         carID= self.cleaned_data['car']
-        max_price=Bid.objects.filter(car=carID).aggregate(Max('price'))+50
-    
-        if price<max_price:
-            raise forms.ValidationError('der er allerede en der byder højere end dig, eller du skal byde minimum 50 kroner højere end hjøst byd.')
+        p=Bid.objects.filter(car=carID).aggregate(Max('price'))['price__max']
+        print p
+        if p is not None:
+            max_price=int(p)+50
+            if price<max_price:
+                raise forms.ValidationError('der er allerede en der byder højere end dig, eller du skal byde minimum 50 kroner højere end hjøst byd.')
         else:
             return price
             

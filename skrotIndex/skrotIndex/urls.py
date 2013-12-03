@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-  
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from skrotIndex import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('ao.views',
@@ -15,17 +18,24 @@ urlpatterns = patterns('ao.views',
     (r'^$', 'index'),
     (r'^register/$','register'),  
     (r'^login/$','userLogin'),
+    (r'^login/(?P<carid>.*)','userLogin'),
     (r'^profil/$','profile'),
     (r'^redigere_profil/$','editProfile'),
     (r'^logud/$','userLogout'),
+    (r'^auto_ophugger/$', 'index'),
     (r'^auto_ophugger/(?P<area>[\w|\W]+)/$', 'index'),
-    
+    (r'^ophugger/(?P<id>.*)/$','ophugger'),
+    (r'^redigere_profile_billede/$','editPic'),
+    (r'^vil_du_slet_profil/$','willDeleteProfile'),
+    (r'^slet_profil/$','deleteProfile'),
 )
 urlpatterns+=patterns('cars.views',
             url(r'^skrot/$','skrot'),
             (r'^biler/(?P<area>[\w|\W]+)/$', 'biler'),
             (r'^biler/$', 'biler'),
-            (r'^bil/(?P<id>.*)/$', 'bil'),    
+            (r'^bil/(?P<carid>.*)/$', 'bil'), 
+            (r'^bekraeft_slet_bud/(?P<bidID>.*)/$', 'confirmDeleteBid'), 
+            (r'^slet_bud/(?P<bidID>.*)/$', 'deleteBid'),  
     
 )
 urlpatterns+=patterns('',

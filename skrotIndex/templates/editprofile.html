@@ -1,10 +1,11 @@
 {% extends "index.html"%}
 
 {% block title %}
-edigere {{company.company}}s profil
+redigere {{ao.company}}s profil
 {% endblock %}
 
 {% block content %}
+{{ao.username}}
 {{text}}
 <div class="form">
 	<form action="" method="post" enctype="multipart/form-data" >
@@ -15,9 +16,6 @@ edigere {{company.company}}s profil
 		
 		{% if form.cvr.errors %}  <div class="error">skriv en gyldig cvr nr</div>  {%endif%}
 		<p><label for="id_cvr">CVR:</label> {{form.cvr}}</p>
-		
-		{% if form.username.errors %}  <div class="error">{{form.username.errors}}</div>  {%endif%}
-		<p><label for="username" >Brugernavn(uden mellemrum):</label> {{form.username}}</p>
 		
 		{% if form.email.errors %}  <div class="error">skriv en gyldig email</div>  {%endif%}
 		<p><label for="id_email">Email:</label> {{form.email}}</p>
@@ -39,7 +37,7 @@ edigere {{company.company}}s profil
 		
 		
 		<p><label for="id_description">Beskriv lidt om værkstedet:</label></p>
-		<p> {{form.description}}</textarea></p>
+		<p> {{form.description}}</p>
 		
 		{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
 	 

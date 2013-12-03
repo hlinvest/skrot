@@ -17,13 +17,15 @@ byd på {{car.brand}}fra {{car.year}}
 
 </table>     
 </div>
- 
+{% if not car.picture %}
+{% else %} 
 <div class="billede" align="right">
-<td><img src="{{MEDIA_URL}}{{c.picture}}" width="200" height="150"></td></div>
+<td><img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150"></td></div>
+{% endif %} 
+<div class="auktion">
 
-<div class="aktion">
-
-Den aktion started {{car.start_time }} slutter {{car.end_time}} 
+<p>Den aktion started {{car.start_time }} slutter {{car.end_time}} </p>
+<p>{{text}}</p>
 <table>
 		<tr><th>Auto ophugger</th>  <th>Pris</th></tr>
 	{% if not bid %}
@@ -44,7 +46,7 @@ Den aktion started {{car.start_time }} slutter {{car.end_time}}
 			<input type="submit" alt="register", value="Byd">
 	</form>
 {% else %}
-	<h3> Log ind og giv en bud.</h3>
+	<h3><a href="/login/{{car.id}}"> Log ind og giv en bud.</a></h3>
 {% endif %}
 </div>
 {% endblock %}

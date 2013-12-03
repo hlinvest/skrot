@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-  
 from django.forms.models import ModelForm
 from django import forms
-from ao.models import AO, Area
+from ao.models import AO
+import imghdr
+from skrotIndex import settings
 
 class RegiForm(ModelForm):
     username=forms.RegexField(
@@ -17,7 +19,7 @@ class RegiForm(ModelForm):
     
     class Meta:
         model=AO
-        exclude=('picture','last_login', 'bid','slug','date_joined')
+        exclude=('picture','last_login', 'bid','slug','date_joined','web')
         
     def clean_username(self):
         username=self.cleaned_data['username']
@@ -55,7 +57,15 @@ class LoginForm(forms.Form):
         username=forms.CharField(label=(u'username'))
         password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
         
-class ChangeProfile(RegiForm):
+class ChangeProfile(ModelForm):
+    def __init__(self, *args, **kwargs):                                       
+        self.existed_email=kwargs.pop('existed_email')                         
+        super(ChangeProfile, self).__init__(*args,**kwargs) 
+    class Meta:
+        model=AO
+        exclude=('username','picture','password','password2','last_login', 'bid','slug','date_joined','web')
+        
+
     def clean_email(self):
         print 'the existed email is '+ self.existed_email
         email=self.cleaned_data['email']
@@ -66,4 +76,19 @@ class ChangeProfile(RegiForm):
                 return email
             raise forms.ValidationError("den email er optaget.")
         return email
+    
+class Picture(forms.Form):
+        picture=forms.FileField(required=False)    
+        def clean_picture(self):
+            picture=self.cleaned_data['picture']
+            if picture is not None:
+                if imghdr.what(picture):
+                    if  picture.size> settings.MAX_PIC_SIZE:
+                        raise forms.ValidationError('Billedet er for stor, max størrelse på billede er  '+str(settings.MAX_PIC_SIZE)+"bit")
+                    else:
+                        return picture
+                else:
+                        raise forms.ValidationError(' det er ikke et billede file')
+            else:
+                return None
     
