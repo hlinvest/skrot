@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block title %}
+vil du delete den bud
+{% endblock %}
+
+{% block content %}
+<h2>click ok for at delete den bud:</h2>
+
+Vil du slette din bud til {{bid.car.brand}} med price {{bid.price}}
+ <a href="/slet_bud/">
+    <button>Ok</button>
+ </a>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Autoophugger {{ao.company}}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ao.company}}</h1>
+<p>{{ao.street}}</p>
+<p>{{ao.postcode}} {{ao.city}}</p>
+<p></p>
+<p>{{ao.web}}</p>
+<p></p>
+<p>{{ao.description}}</p>
+
+{% block right %}
+{% if not ao.picture %}
+{% else%}
+<img src="{{MEDIA_URL}}{{ao.picture}}" width="150" height="150">
+{% endif %}
+{% endblock %}
+
+{% endblock %} 

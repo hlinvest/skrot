@@ -1,0 +1,30 @@
+{% extends "index.html"%}
+
+{% block title %}
+{{ao.company}}s profil billede
+{% endblock %}
+
+{% block content %}
+<h2>Hey, du kan tilføje eller ændre dit virksomheds billede her</h2>
+
+{{text}}
+ <form action="" method="post" enctype="multipart/form-data" >
+ 	{% csrf_token %} 
+ 	dit nuværrende profile billede er: 
+		{% if not ao.picture %}
+			Du har ikke noget profile billede.
+		{% else%}
+			<img src="{{MEDIA_URL}}{{ao.picture}}" width="200" height="150">
+		
+		{% endif %}
+ 		{% if form.picture.errors %}  <div class="error">{{ao.picture.errors}}}  </div>{%endif%}
+		<p><label for="id_picture">Picture:</label>{{form.picture}}</p>
+	<input type="submit" name="delete" value="Slet" />
+	<input type="submit" name="change" value="Ændre" />
+	{{ form.errors }}
+</form>
+	 
+ {% endblock %}
+ 
+ 
+ 
