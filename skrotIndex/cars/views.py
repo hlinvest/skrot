@@ -4,7 +4,7 @@ from ao.models import Area, Bid, AO
 from cars import models
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
-from cars.models import BidArea, Car
+from cars.models import BidArea, Car, SoldCar, highest_bid
 from datetime import datetime,timedelta
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import ao
@@ -73,7 +73,7 @@ def bil(request,carid):
         except a.DoesNotExist:
             return render_to_response('bil.html', {'car':car, 'text': 'Du kan ikke byde med din konto.'}, context_instance=RequestContext(request))
         if request.method=='POST':
-            form=BidForm(request.POST , initial={'car':car} )
+            form=BidForm(request.POST , initial={'car':carid} )
             if form.is_valid():
                 b=ao.models.Bid(car=car,ao=a,price=form.cleaned_data['price'])
                 b.save()
@@ -82,10 +82,10 @@ def bil(request,carid):
                 print "havn't save the bid"
                 return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
         else:
-            form=BidForm(initial={'car':id} )
+            form=BidForm(initial={'car':carid} )
             return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))    
     else:
-        form=BidForm(initial={'car':id} )
+        form=BidForm(initial={'car':carid} )
         return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
     
 @login_required
@@ -105,6 +105,11 @@ def deleteBid(request,bidID):
         return HttpResponse(html)
         
 
+def expiredCar(request, carID):
+    car=SoldCar.objects.get(pk=carID)
+    bid=highest_bid.objects.filter(carID=carID)
+    return  render_to_response('expired_car.html', {'car':car,'bid':bid}, context_instance=RequestContext(request))
 
+    
 
 

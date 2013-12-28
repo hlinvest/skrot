@@ -1,15 +1,25 @@
 # Django settings for skrotIndex project.
 import os
 DEBUG = True
+# when site in production it has be use wed serv er to point to the idrectory by use /manage.py collectstatic 
 TEMPLATE_DEBUG = DEBUG
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..') 
 SITE_ROOT = PROJECT_ROOT
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'faahjaelp@gmail.com'
+EMAIL_HOST_PASSWORD = 'djangoserver'
+DEFAULT_FROM_EMAIL = 'faahjaelp@hotmail.com'
+
 
 DATABASES = {
     'default': {
@@ -31,7 +41,7 @@ CRON_CLASSES = [
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 MAX_PIC_SIZE=1500000
 
 
@@ -42,6 +52,7 @@ MAX_PIC_SIZE=1500000
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Europe/Copenhagen'
+
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -132,9 +143,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'django.contrib.admin',
      'cars',
      'ao',
-     'django.contrib.admin',
      "django_cron",
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

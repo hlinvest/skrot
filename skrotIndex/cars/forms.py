@@ -6,6 +6,7 @@ import imghdr
 from skrotIndex import settings
 from ao.models import Bid
 from django.db.models.aggregates import Max
+from django.http import request
 date_choice= [(i,i) for i in range(1,7)]
 
 class CarForm(ModelForm):
@@ -18,11 +19,11 @@ class CarForm(ModelForm):
         exclude=('slug','start_time','end_time')
     def clean_plate(self):
         plate=self.cleaned_data['plate']
-        p=Car.objects.get(plate=plate)
-        if p is not None:
-            raise forms.ValidationError('der er en som er regiteret med den nummerplade på vores side.')
-        else:
-            return plate
+        try:
+            Car.objects.get(plate=plate)
+        except Car.DoesNotExist:
+           return plate
+        raise forms.ValidationError('der er en som er regiteret med den nummerplade på vores side.')
         
     def clean_picture(self):
         picture=self.cleaned_data['picture']
@@ -38,12 +39,12 @@ class CarForm(ModelForm):
             return None
         
 class BidForm(forms.Form):
-    car=forms.CharField()
+    car=forms.CharField(widget = forms.HiddenInput())
     price=forms.IntegerField()
     def clean_price(self):
         price= self.cleaned_data['price']
-        carID= self.cleaned_data['car']
-        p=Bid.objects.filter(car=carID).aggregate(Max('price'))['price__max']
+        car=self.cleaned_data['car']
+        p=Bid.objects.filter(car=car).aggregate(Max('price'))['price__max']
         print p
         if p is not None:
             max_price=int(p)+50

@@ -4,7 +4,7 @@ from django.utils.text import slugify
 class Car(models.Model):
         id = models.AutoField(primary_key=True)
         slug=models.SlugField(unique=True)
-        plate=models.CharField(max_length=20)
+        plate=models.CharField(unique=True,max_length=20)
         year=models.IntegerField()
         brand=models.CharField(max_length=40)
         address=models.CharField(max_length=40, null=True)
@@ -42,6 +42,7 @@ class SoldCar(models.Model):
         tlf=models.IntegerField(null=True)
         start_time=models.DateTimeField()
         end_time=models.DateTimeField(db_index=True)
+        picture=models.ImageField(upload_to='media/carPictures',null=True)
         
 class highest_bid(models.Model):
         carID=models.ForeignKey(Car, on_delete=models.CASCADE)

@@ -2,72 +2,146 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>
-{% block title %}
-Få den højste byd på din bil fra autohuggerne 
-{% endblock %}
-</title>
-<link href="{{STATIC_URL}}style.css" rel="stylesheet" type="text/css" />
+<title>Skrot din bil den det højeste pris</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
-<div class="all">
- 	<div class="headerOne">
-    </div>
-	<div class="con">
-        <div class="headTwo">
-          <h1>SkrotIndex.dk </h1></div>
-        <div class="menu">
-        <a href='/'>Find auto ophuggerne</a>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          <a href='/biler/' > Biler til at byde &nbsp;&nbsp;</a></br>
-        <a href='/'> Velkommen &nbsp;&nbsp;</a>   <a href="/skrot/"> Skrot din bil &nbsp;&nbsp;</a> <a href="">Hjælp &nbsp;&nbsp;</a>
-		{% if user.is_authenticated %}<a href="/profil/">Profil &nbsp;&nbsp;</a><a href="/logud/"> Log ud &nbsp;&nbsp;</a> <a href="/vil_du_slet_profil/"> slet din profil</a>
-			<a href="/profile/addJob/">&nbsp;&nbsp;</a>
-			
-		{%else%} <a href='/login/'> Login &nbsp;&nbsp;</a> 
-		<a href='/register/'> Registrer &nbsp;&nbsp;</a>
-		{% endif %}
-		</div>
-		<br>
-		{% block typemenu %}
-        <div class="AutoOphugger">
-        <ul id="nav">
-        	<li><a href="/auto_ophugger/">Hele Danmark</a></li>
-	        {% for a in all_areas %}
-	        	<li><a href= "/auto_ophugger/{{a.area}}/">{{a.area}}</a></li>
-	        {% endfor %}
-	     </ul>
-        </div>
-        {% endblock %}
-	
-        
-  <div class="leftside">		
-{% block content %}	
-  <h1>Auto ophugger i  {% if area %}i {{area}} {%else%} Danmark {% endif %}</h1>
-<table >
-<tr>
-	<th>Auto ophugger</th>
-	<th>Adresse</th>
-	<th>By</th>
-	<th>Telefon</th>
-</tr>	
-{% for a in ao %}
- <tr>
-   		<td><a href="/ophugger/{{a.id}}/">{{a.company}}</a></td>
-	    <td>{{a.street}}</td>
-	    <td>{{a.city}}</td>
-	    <td>{{a.tlf}}</td>
-  </tr>
-{% endfor %}
-</table>      
-{% endblock %}
-</div>
-<div class="rigthside">
-{% block right%}
 
-{% endblock %}
+<div id="site_title_bar_wrapper">
+	<div id="site_title_bar">
+    	<div id="site_title">
+            <h1><a href="/">SKROTINDEX<span>Få det højeste bud på din bil</span>
+            </a></h1>
         </div>
-        <div class="button"> @ Copyright 2013 beta version</div>
-	</div>
-</div>
+        
+        <div id="site_title_bar_right_section">
+        
+            <div id="menu">
+                <ul>
+                	<li><a href="/" class="current"><span></span>Velkommen</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
+                    {% if user.is_authenticated %}
+                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a></li>
+	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+					{%else%} 
+						<li><a href='/login/' target="_parent"> <span></span>Login</a> </li>
+						<li><a href='/register/' target="_parent"><span></span> Registrer</a></li>
+					{% endif %}
+					<li><a href=""><span></span>Om os</a></li>
+                    <li><a href="" target="_parent"><span></span>Kontakt os</a></li>                   
+                  
+                </ul>
+            </div> <!-- end of menu -->
+            
+		</div>        
+       
+	</div> <!-- end of site_title_bar -->        
+       
+</div> <!-- end of site_title_bar_wrapper -->
+
+<div id="banner_wrapper">
+
+	<div id="banner">
+    
+    	<h2>Work with us for your <span>SUCCESS</span></h2>
+       	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit est tincidunt urna consectetur et fringilla neque tristique. Vestibulum vel est vitae lectus molestie dapibus. Donec nec est eros. In neque arcu, malesuada at ultrices a, vehicula pharetra mi.</p>
+		<!--<a href="#">Se mere <span>&raquo;</span></a>-->
+    
+    </div> <!-- end of banner -->
+
+</div> <!-- end of banner_wrapper -->
+
+<div id="content_wrapper">
+
+	<div id="content">
+    
+    	<div class="service_box">
+        	
+             <a href="/skrot/"><h3>Skrot din bil</h3></a>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit est tincidunt urna consectetur et fringilla.</p>
+            <a href="/skrot/"><img src="static/icon_1.png" alt="image 1" /></a>
+           
+                    
+        </div>
+        
+        <div class="service_box">
+        	
+            <a href="/auto_ophugger/"><h3>Find en autoophugger</h3></a>
+            <p>Aenean adipiscing sollicitudin urna. Praesent sed augue risus. Duis fringilla erat vel neque facilisis nec rutrum nisl vestibulum.</p>
+            <a href="/auto_ophugger/" title="照片"  class="service_box_two" target="_blank"><img src="static/icon_2.png" title="autoophugerne" alt="autoophuggerne" /></a>
+                    
+        </div>
+        
+		<div class="service_box">
+        	
+            <a href="/biler/"><h3>Byd på en bil, hvis du er en autoophugger</h3></a>
+            <p>Done,fringilla convallis metus. Pellentesque sed libero ligula.</p>
+            <a href=""><img src="static/icon_3.png" alt="image 3" /></a>
+           
+                    
+        </div>
+        
+        <div class="cleaner_h40"></div>
+    
+    	<div class="section_w960">
+        
+        	<div class="section_w600">
+            	
+                <h2>Welcome to free css templates</h2>
+                
+                <div class="image_wrapper fl_image"><img src="static/image_01.jpg" alt="image 10" width="200" height="133" /></div>
+                
+              <p class="em_text">Free CSS Templates are provided by TemplateMo.com You may download, modify and apply this template for your websites.</p>
+                
+                <p>Aenean ornare nibh adipiscing arcu pellentesque ac posuere lacus lobortis. Sed massa turpis, blandit sed condimentum fermentum, porta eu urna. Maecenas vitae neque sed mi consequat pellentesque. </p>
+                <p>Suspendisse sodales hendrerit feugiat. Duis non eros diam, ut pharetra eros. Aenean bibendum, ligula in facilisis laoreet, dolor leo venenatis enim, ut posuere tortor justo non mi. </p>
+       	  </div>
+            
+            <div class="section_w320">
+            
+            	<h2>Seneste biler</h2>
+                
+                <div class="news_section">
+                    <h3><a href="#">Etiam tempus tellus eget </a></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et ipsum sem, ut lobortis dui.</p>
+                </div>
+                
+                <div class="news_section">
+                    <h3><a href="#">Nam quis aliquet quam</a></h3>
+                    <p>Sed pharetra neque vel mauris auctor ornare. Maecenas urna lorem, consectetur eget consectetur id.</p>
+                </div>
+                
+                <div class="button_01"><a href="#">View All</a></div>
+            
+            </div>
+            
+            <div class="cleaner"></div>
+        </div>
+    
+    </div> <!-- end of content -->
+
+</div> <!-- end of content_wrapper -->
+<div id="footer_wrapper">
+	<div id="footer">
+        
+            <ul class="footer_menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Om os</a></li>
+                <li class="last_menu"><a href="#">Kontakt</a></li>
+            </ul>
+            
+            Copyright © 2014 <a href="#">Skrotindex</a> | 
+            Designed by <a href="" rel="nofollow" target="_parent">HL web/software</a> | 
+            Validate <a href="http://validator.w3.org/check?uri=referer">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+        
+        </div> <!-- footer -->
+</div> <!-- end of footer_wrapper -->
+
 </body>
 </html>

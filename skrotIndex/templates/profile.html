@@ -1,32 +1,68 @@
-{% extends "index.html"%}
+{% extends "ophugger.html"%}
 
 {% block title %}
 {{company.company}}s profil
 {% endblock %}
+  {% block headmenu %}
+                	<li><a href="/" ><span></span>Velkom</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li> <a href='/biler/'> <span></span>Biler til at byde</a></li>
+                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
+                    {% if user.is_authenticated %}
+                    	<li><a href="/profil/" class="current"><span></span>Profil &nbsp;&nbsp;</a></li>
+	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+					{%else%} 
+						<li><a href='/login/'> <span></span>Login</a> </li>
+						<li><a href='/register/'><span></span> Register</a></li>
+					{% endif %}
+					<li><a href=""><span></span>Om os</a></li>
+                    <li><a href=""><span></span>Kontakt os</a></li>                   
+                  
+                </ul>
+       {% endblock %}
 
 {% block content %}
-<h2>Hey, {{company.username}}</h2>
-
-{{company.email}}
-
+<div class="userprofile">
+	<h2>{{company.username}}</h2>
+	<table>
+		<tr><td>Email: </td><td>{{company.email}}</td></tr>
+		<tr><td>CVR: </td><td>{{company.cvr}}</td></tr>
+		<tr><td>Address: </td><td>{{company.street}}</td></tr>
+		<tr><td>Postnr: </td><td>{{company.postcode}}</td></tr>
+		<tr><td>By: </td><td>{{company.by}}</td></tr>
+		<tr><td>Telephon: </td><td>{{company.tlf}}</td></tr>
+	</table>
+	<br>
+	<a href="/redigere_profil/"> Rediger din virksomhed profil her</a></Br>
+</div>
+<div class="userpicture">
 {% if not company.picture %}
 {% else%}
 <img src="{{MEDIA_URL}}{{company.picture}}" width="200" height="150">
 
 {% endif %}
-</br>
-	<a href="/redigere_profil/"> Rediger din virksomhed profil her</a></Br>
+<br>
 	<a href="/redigere_profile_billede/"> Rediger eller tilføje et billede for din virksomhed</a> </br>
-	 
- {% endblock %}
+</div> 
  
- {% block right %}
+ {% block userbid %}
+ <div class="userbid">
  <h2> Dine buder:</h2>
- {% for b in bid %}
- {{b.car}}
- {{b.car.brand}}
- {{ b.price}}
- <a href="/bekraeft_slet_bud/{{b.id}}">slet den bud</a>
- {%endfor%} 
+ {% if not bid %}
+ du har ikke bød på nogle biler
+ {% else %}
+	 {% for b in bid %}
+<table>
+	<tr><th>Mærk</th><th>Årgang</th><th>din price</th></tr>
+	 <tr><td><a href="/bil/{{b.car.id}}">{{b.car.brand}}</a></td>
+	 <td>{{b.car.year}}</td><td>{{ b.price}}</td>
+	 <td> <a href="/bekraeft_slet_bud/{{b.id}}">slet den bud</a></td></tr>
+	 
+</table>
+	 {%endfor%} 
+{% endif %}
+ </div>
+ {% endblock %}
  {% endblock %}
  

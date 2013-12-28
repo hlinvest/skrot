@@ -1,19 +1,37 @@
-{% extends 'index.html' %} 
+{% extends 'ophugger.html' %} 
 {% block title %}
 Find biler der vil sælges til skrot handler
 {% endblock %}
-{% block typemenu %}
-      <div class="AutoOphugger">
-        <ul id="nav">
-	        {% for a in all_areas %}
-	        	<li><a href= "/biler/{{a.area}}/">{{a.area}}</a></li>
-	        {% endfor %}
-	     </ul>
-        </div>
- {% endblock %}
-		
-{% block content %}	
-  <h1>Biler i  {% if area %} {{area}} {%else%} Danmark {% endif %}</h1>
+ {% block headmenu %}
+                	<li><a href="/" ><span></span>Velkom</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li> <a href='/biler/' class="current"> <span></span>Biler til at byde</a></li>
+                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
+                    {% if user.is_authenticated %}
+                    	<li><a href="/profil/" ><span></span>Profil &nbsp;&nbsp;</a></li>
+	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+					{%else%} 
+						<li><a href='/login/'> <span></span>Login</a> </li>
+						<li><a href='/register/'><span></span> Register</a></li>
+					{% endif %}
+					<li><a href=""><span></span>Om os</a></li>
+                    <li><a href=""><span></span>Kontakt os</a></li>                   
+                  
+                </ul>
+       {% endblock %}
+
+{% block area %}
+	        <ul id="nav">
+	        	<li><a href="/biler/">Hele Danmark</a></li>
+		        {% for a in all_areas %}
+		        	<li><a href= "/biler/{{a.area}}/">{{a.area}}</a></li>
+		        {% endfor %}
+		     </ul>
+{% endblock %}
+ 
+{% block leftbody %}
+  <h2>Biler i  {% if area %} {{area}} {%else%} Danmark {% endif %}</h2><br>
 <table >
 <tr>
 	<th>Mærk</th>
@@ -36,16 +54,17 @@ Find biler der vil sælges til skrot handler
 <div class="pagination">
     <span class="step-links">
         {% if car.has_previous %}
-            <a href="?page={{ car.previous_page_number }}">previous</a>
+            <a href="?page={{ car.previous_page_number }}">Forrige</a>
         {% endif %}
 
         <span class="current">
-            Page {{ car.number }} of {{ car.paginator.num_pages }}.
+            Side {{ car.number }} af {{ car.paginator.num_pages }}.
         </span>
 
         {% if car.has_next %}
-            <a href="?page={{ car.next_page_number }}">next</a>
+            <a href="?page={{ car.next_page_number }}">næste</a>
         {% endif %}
     </span>
-</div>     
-{% endblock %}
+</div>   
+{% endblock %}  
+

@@ -11,7 +11,7 @@ class AO(User):
     city=models.CharField(max_length=20)
     area=models.ForeignKey('Area', null=True,on_delete=models.SET_NULL)  
     tlf=models.IntegerField()
-    web=models.CharField(max_length=60, null=True)
+    web=models.URLField(null=True)
     description=models.TextField()
     picture=models.FileField(upload_to="media/aos", blank=True)
     

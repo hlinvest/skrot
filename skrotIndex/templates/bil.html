@@ -3,50 +3,55 @@
 byd på {{car.brand}}fra {{car.year}}
 {% endblock %}
 		
-{% block content %}	
-  <h1>byd på {{car.brand}} fra {{car.year}}</h1>
-<div class="bil info" align="left">
-<table >
-	<tr><td>Nummerplad</td> <td>{{car.plate}}</td></tr>
-	<tr><td>Mærk</td><td>{{car.brand}}</td></tr>
-	<tr><td>Årgang</td> <td>{{car.year}}</td></tr>
-	<tr><td>Adresse</td> <td>{{car.address}}</td></tr>
-	<tr><td>By</td> <td>{{car.city}}</td></tr>
-	<tr><td>Ønsket af pickup</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
+{% block leftbody %}	
+  <h1>Aktioner:  {{car.brand}} fra {{car.year}}</h1>
+  <br>
 
-
-</table>     
-</div>
-{% if not car.picture %}
-{% else %} 
-<div class="billede" align="right">
-<td><img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150"></td></div>
-{% endif %} 
+	<table >
+		<tr><td>Nummerplad</td> <td>{{car.plate}}</td></tr>
+		<tr><td>Mærk</td><td>{{car.brand}}</td></tr>
+		<tr><td>Årgang</td> <td>{{car.year}}</td></tr>
+		<tr><td>Adresse</td> <td>{{car.address}}</td></tr>
+		<tr><td>By</td> <td>{{car.city}}</td></tr>
+		<tr><td>Ønsket af pickup</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
+	</table>     
+	
 <div class="auktion">
-
-<p>Den aktion started {{car.start_time }} slutter {{car.end_time}} </p>
-<p>{{text}}</p>
-<table>
-		<tr><th>Auto ophugger</th>  <th>Pris</th></tr>
-	{% if not bid %}
-	{% else %}
-		{% for b in bid %}
-			<tr><td>{{b.ao.company}}</td>  <td>{{b.price}}</td></tr>
-		{% endfor %}
-	{% endif %}
-</table>
-{% if user.is_authenticated %}
-	<form action="" method="post">
-			{% csrf_token %}
-			 {% if form.price.errors%}<div class="error">{{form.price.errors}}</div> {% endif%}
-			<p><label for=pris">Pris: </label> {{form.price}}</p>
-			
-			{{form.car.as_hidden}}
-			{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
-			<input type="submit" alt="register", value="Byd">
-	</form>
-{% else %}
-	<h3><a href="/login/{{car.id}}"> Log ind og giv en bud.</a></h3>
-{% endif %}
-</div>
+<p><h2>Den aktion started {{car.start_time }} <br> Slutter {{car.end_time}}</h2> </p>
+	<p>{{text}}</p>
+	<table>
+			<tr><th>Auto ophugger</th>  <th>byd</th></tr>
+		{% if not bid %}
+		{% else %}
+			{% for b in bid %}
+				<tr><td>{{b.ao.company}}</td>  <td>{{b.price}}</td></tr>
+			{% endfor %}
+		{% endif %}
+		
+		{% if user.is_authenticated %}
+		<tr><td></td></tr>
+		<tr><td>afgiv din byd:</td></tr>
+ 			<form action="" method="post">
+ 			{% csrf_token %} 
+ 				{% if form.price.errors %}<span color="red"> {{form.price.errors}}</span>{% endif %}
+ 				{{form.car}}
+ 				<tr><td>{{form.price}}</td><td><input type="submit" alt="register", value="Din byd"></td></tr>
+ 			 </form>
+ 		{% else %}
+		<h3> Log ind <a href="/login/{{car.id}}">her</a> og giv en bud.</h3>
+ 		{% endif %}
+	</table>
+	</div>
 {% endblock %}
+
+{% block rightbody %}
+		{% if not car.picture %}
+		not pic
+		{% else %} 
+			<br>
+			<div class="billede" align="left">
+			<img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150">
+			</div>
+		{% endif %} 
+{% endblock %}
+

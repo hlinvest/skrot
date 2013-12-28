@@ -8,15 +8,17 @@ from ao import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+def index(request):
+    return render_to_response('index.html', context_instance=RequestContext(request))
 
-def index(request, area=None):
+def ao(request, area=None):
 
     if area is None:
         ao=AO.objects.filter( is_active=True)
     else:
         ar=Area.objects.get(area=area)
         ao=AO.objects.filter( area=ar, is_active=True)            
-    return render_to_response('index.html', {'ao':ao, 'area':area}, context_instance=RequestContext(request))
+    return render_to_response('ophugger.html', {'ao':ao, 'area':area}, context_instance=RequestContext(request))
 
 def register(request):
     if request.user.is_authenticated():       # is a section tool
@@ -27,7 +29,7 @@ def register(request):
             ar=Area.objects.get(area=form.cleaned_data['area'])
             ao=models.AO(username=form.cleaned_data['username'],company=form.cleaned_data['company'], email=form.cleaned_data['email'], description=form.cleaned_data['description'],
                            cvr=form.cleaned_data['cvr'],  street=form.cleaned_data['street'], postcode=form.cleaned_data['postcode'],
-                           city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], is_active=True, is_superuser=False)
+                           city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], web=form.cleaned_data['web'],is_active=True, is_superuser=False)
             ao.set_password( form.cleaned_data['password'])    
                   
             ao.save()
@@ -110,6 +112,7 @@ def saveChange(ao, form):
     ao.area=form.cleaned_data['area']
     ao.tlf=form.cleaned_data['tlf']
     ao.is_active=form.cleaned_data['is_active']
+    ao.web=form.cleaned_data['web']
     ao.description=form.cleaned_data['description']
     ao.save()
     

@@ -5,7 +5,6 @@ from skrotIndex import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
 admin.autodiscover()
 
 urlpatterns = patterns('ao.views',
@@ -22,8 +21,8 @@ urlpatterns = patterns('ao.views',
     (r'^profil/$','profile'),
     (r'^redigere_profil/$','editProfile'),
     (r'^logud/$','userLogout'),
-    (r'^auto_ophugger/$', 'index'),
-    (r'^auto_ophugger/(?P<area>[\w|\W]+)/$', 'index'),
+    (r'^auto_ophugger/$', 'ao'),
+    (r'^auto_ophugger/(?P<area>[\w|\W]+)/$', 'ao'),
     (r'^ophugger/(?P<id>.*)/$','ophugger'),
     (r'^redigere_profile_billede/$','editPic'),
     (r'^vil_du_slet_profil/$','willDeleteProfile'),
@@ -36,6 +35,7 @@ urlpatterns+=patterns('cars.views',
             (r'^bil/(?P<carid>.*)/$', 'bil'), 
             (r'^bekraeft_slet_bud/(?P<bidID>.*)/$', 'confirmDeleteBid'), 
             (r'^slet_bud/(?P<bidID>.*)/$', 'deleteBid'),  
+            (r'afsluttende/(?P<carID>.*)/$', 'expiredCar'),
     
 )
 urlpatterns+=patterns('',
