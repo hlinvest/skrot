@@ -129,12 +129,10 @@ def editPic(request):
                 if 'change' in request.POST:
                     print " we are in change picture now"
                     if not ao.picture:                 # if not return true  with empty string and value 0, if ..is not none check null value.  
-                        ao.picture=form.cleaned_data['picture']
-                        ao.save()  
+                        ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
                     else: 
                         ao.picture.delete()
-                        ao.picture=form.cleaned_data['picture']
-                        ao.save()
+                        ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
                     return render_to_response('editpic.html', {'form':form,'ao':ao,'text':'dit nyt profil billede er ændret/tilføj'}, context_instance=RequestContext(request))
                     
                 elif 'delete' in request.POST:

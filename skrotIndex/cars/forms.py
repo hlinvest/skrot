@@ -45,11 +45,12 @@ class BidForm(forms.Form):
         price= self.cleaned_data['price']
         car=self.cleaned_data['car']
         p=Bid.objects.filter(car=car).aggregate(Max('price'))['price__max']
-        print p
         if p is not None:
             max_price=int(p)+50
             if price<max_price:
                 raise forms.ValidationError('der er allerede en der byder højere end dig, eller du skal byde minimum 50 kroner højere end hjøst byd.')
+            else:
+                return price
         else:
             return price
             

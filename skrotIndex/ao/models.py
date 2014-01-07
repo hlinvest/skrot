@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.core.validators import MaxLengthValidator
 
 class AO(User):
     company=models.CharField(max_length=40)
@@ -12,7 +13,7 @@ class AO(User):
     area=models.ForeignKey('Area', null=True,on_delete=models.SET_NULL)  
     tlf=models.IntegerField()
     web=models.URLField(null=True)
-    description=models.TextField()
+    description=models.TextField(validators=[MaxLengthValidator(2000)])
     picture=models.FileField(upload_to="media/aos", blank=True)
     
 
@@ -31,7 +32,7 @@ class Bid(models.Model):
     ao=models.ForeignKey(AO, on_delete=models.CASCADE)
     price=models.IntegerField()
     class meta:
-        ordering=['ao']
+        ordering=['car']
     
 class Area(models.Model):
     area=models.CharField(max_length=20)

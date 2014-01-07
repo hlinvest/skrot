@@ -57,7 +57,8 @@
 	<tr><th>Mærk</th><th>Årgang</th><th>din price</th></tr>
 	 <tr><td><a href="/bil/{{b.car.id}}">{{b.car.brand}}</a></td>
 	 <td>{{b.car.year}}</td><td>{{ b.price}}</td>
-	 <td> <a href="/bekraeft_slet_bud/{{b.id}}">slet den bud</a></td></tr>
+	 <td> <button onclick="location.href='/bekraeft_slet_bud/{{b.id}}'">
+     slet den bud</button></td></tr>
 	 
 </table>
 	 {%endfor%} 

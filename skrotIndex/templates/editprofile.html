@@ -1,64 +1,54 @@
-{% extends "ophugger.html"%}
+{% extends "profile.html"%}
 
 {% block title %}
 redigere {{ao.company}}s profil
 {% endblock %}
-  {% block headmenu %}
-                	<li><a href="/" ><span></span>Velkom</a></li>
-                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/'> <span></span>Biler til at byde</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/" class="current"><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
-					{%else%} 
-						<li><a href='/login/'> <span></span>Login</a> </li>
-						<li><a href='/register/'><span></span> Register</a></li>
-					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href=""><span></span>Kontakt os</a></li>                   
-                  
-                </ul>
-       {% endblock %}
 {% block content %}
-{{ao.username}}
+<h2>Du kan ændre din profil her</h2>
 {{text}}
-<div class="form">
+<div  id="stylized" class="form">
 	<form action="" method="post" enctype="multipart/form-data" >
 	{% csrf_token %} 
-	
-		{% if form.company.errors %} <div class="error">{{form.company.errors}}</div>  {%endif%}
-		<p><label for="virksomhed" >Virksomhed:</label> {{form.company}}</p>
+	<table>
+		<tr><td><label for="virksomhed" >Virksomhed:
+		{% if form.company.errors %} <span class="small">{{form.company.errors}}</span>  {%endif%}</label></td> 
+		<td> {{form.company}}</td></tr>
 		
-		{% if form.cvr.errors %}  <div class="error">skriv en gyldig cvr nr</div>  {%endif%}
-		<p><label for="id_cvr">CVR:</label> {{form.cvr}}</p>
+		<tr><td><label for="id_cvr">CVR:
+		{% if form.cvr.errors %}  <span class="small">skriv en gyldig cvr nr</span>  {%endif%}</label> </td>
+		<td>{{form.cvr}}</td></tr>
 		
-		{% if form.email.errors %}  <div class="error">skriv en gyldig email</div>  {%endif%}
-		<p><label for="id_email">Email:</label> {{form.email}}</p>
+		<tr><td><label for="id_email">Email:
+		{% if form.email.errors %}  <span class="small">skriv en gyldig email</span>  {%endif%}</label></td>
+		<td> {{form.email}}</td></tr>		
 		
-		{% if form.tlf.errors %}  <div class="error">skriv en gyldig telefon nr</div>  {%endif%}
-		<p><label for="id_tlf">Telefon:</label> {{form.tlf}}</p>
+		<tr><td><label for="id_tlf">Telefon:
+		{% if form.tlf.errors %}  <span class="small">skriv en gyldig telefon nr</span>  {%endif%}</label> </td>
+		<td>{{form.tlf}}</td></tr>		
 		
-		{% if form.street.errors %}  <div class="error">skriv en gyldig adresse</div>  {%endif%}
-		<p><label for="id_address">Addresse:</label> {{form.street}}</p>
+		<tr><td><label for="id_address">Addresse:
+		{% if form.street.errors %}  <span class="small">skriv en gyldig adresse</span>  {%endif%}</label> </td>
+		<td>{{form.street}}</td></tr>
+				
+		<tr><td><label for="id_city">Post nummer:
+		{% if form.postcode.errors %}  <span class="small">skriv en korrekt postnummer </span>>  {%endif%}</label> </td>
+		<td>{{form.postcode}}</td></tr>
 		
-		{% if form.postcode.errors %}  <div class="error">skriv en korrekt postnummer </div>  {%endif%}
-		<p><label for="id_city">Post nummer:</label> {{form.postcode}}</p>
+		<tr><td><label for="id_city">By:
+		{% if form.city.errors %}  <span class="small">skriv en gyldig bynavn</span>  {%endif%}</label></td>
+		<td> {{form.city}}</td></tr>
+
+		<tr><td><label for="id_area">Område:
+		{% if form.area.errors %}  <span class="small">vælg et gyldigt område </span>  {%endif%}</label></td>
+		<td> {{form.area}}</td></tr>
 		
-		{% if form.city.errors %}  <div class="error">skriv en gyldig bynavn</div>  {%endif%}
-		<p><label for="id_city">By:</label> {{form.city}}</p>
 		
-		{% if form.area.errors %}  <div class="error">vælg et gyldigt område </div>  {%endif%}
-		<p><label for="id_area">Område:</label> {{form.area}}</p>
-		
-		
-		<p><label for="id_description">Beskriv lidt om værkstedet:</label></p>
-		<p> {{form.description}}</p>
-		
-		{% if form.errors %} <div class="error">{{form.errors}} Vær at venlig at indtaste korrekt information</div> {%endif%}
-	 
-		<p><input type="submit" alt="Ændre", value="Ændre"></p>
+		<tr><td><label for="id_description">Beskriv lidt om værkstedet:</label></td>
+		 <td>{{form.description}}</td></tr>
+			 
+		<tr><td></td><td><input type="submit" alt="Ændre", value="Ændre"></td></tr>
+		</table>
 		</form>
+</div>
  {% endblock %}
  

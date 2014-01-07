@@ -9,8 +9,12 @@ body {
 	color: #444444;
 	background: #ffffff;
 }
+a{
+	font-weight:bold;
+}
+
 a:link {text-decoration:none;}
-a:visited { color: #003;}
+a:visited { color: #1C3066;}
 
 p { margin: 0px; padding: 0px; }
 
@@ -44,7 +48,7 @@ img { margin: 0px; padding: 0px; border: none; }
 h1 {
 	margin: 0px;
 	padding: 0px;;
-	font-size: 30px;
+	font-size: 26px;
 	font-weight: bold;
 	color: #000;
 }
@@ -52,7 +56,7 @@ h1 {
 h2 {
 	margin: 0 0 15px 0;
 	padding: 3px 0;
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: bold;
 	color: #000000;
 }
@@ -63,7 +67,7 @@ h3 {
 	font-size: 12px;
 	font-weight: bold;
 	font-weight: bold;
-	color: #000;
+	color: #910C0D;
 }
 
 
@@ -465,6 +469,7 @@ font-size:11px;
 font-weight:normal;
 text-align:right;
 width:140px;
+
 }
 #stylized input{
 float:left;

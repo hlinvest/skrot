@@ -1,31 +1,13 @@
-{% extends "ophugger.html"%}
+{% extends "profile.html"%}
 
 {% block title %}
 {{ao.company}}s profil billede
 {% endblock %}
-  {% block headmenu %}
-                	<li><a href="/" ><span></span>Velkom</a></li>
-                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/'> <span></span>Biler til at byde</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/" class="current"><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
-					{%else%} 
-						<li><a href='/login/'> <span></span>Login</a> </li>
-						<li><a href='/register/'><span></span> Register</a></li>
-					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href=""><span></span>Kontakt os</a></li>                   
-                  
-                </ul>
-       {% endblock %}
 
 {% block content %}
+<div class="userprofile">
 <h2>Hey, du kan tilføje eller ændre dit virksomheds billede her</h2>
-
-{{text}}
+<h3>{{text}}</h3>
  <form action="" method="post" enctype="multipart/form-data" >
  	{% csrf_token %} 
  	dit nuværrende profile billede er: 
@@ -35,13 +17,16 @@
 			<img src="{{MEDIA_URL}}{{ao.picture}}" width="200" height="150">
 		
 		{% endif %}
- 		{% if form.picture.errors %}  <div class="error">{{ao.picture.errors}}}  </div>{%endif%}
-		<p><label for="id_picture">Picture:</label>{{form.picture}}</p>
+ 		{% if form.picture.errors %}  <span class="small">{{ao.picture.errors}}  </span>{%endif%}
+		<p><label for="id_picture">Du kan ændre /tilfølje et profil billede her:</label>{{form.picture}}</p>
+</div>
+<div class="userpicture"></div>
+<div class="userbid">	
 	<input type="submit" name="delete" value="Slet" />
 	<input type="submit" name="change" value="Ændre" />
 	{{ form.errors }}
 </form>
-	 
+</div>	 
  {% endblock %}
  
  

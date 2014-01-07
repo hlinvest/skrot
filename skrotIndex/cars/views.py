@@ -10,6 +10,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import ao
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from skrotIndex import settings
+
 
 def skrot(request):
     if request.method=='POST':
@@ -26,12 +29,17 @@ def skrot(request):
             
             car=models.Car(plate=form.cleaned_data['plate'], year=form.cleaned_data['year'], brand=form.cleaned_data['brand'],
                            address=form.cleaned_data['address'],  city=form.cleaned_data['city'],pickup=form.cleaned_data['pickup'], email=form.cleaned_data['email'],
-                           tlf=form.cleaned_data['tlf'], start_time=now, end_time=end, picture=form.cleaned_data['picture'], )           
-            car.save() 
+                           tlf=form.cleaned_data['tlf'], start_time=now, end_time=end, picture=form.cleaned_data['picture'], )         
+            car.save()
+            car.picture.save(car.plate,form.cleaned_data['picture'],save=True )  
+            aos=[]
             for g in request.POST.getlist('bid_area'):
                 ar=Area.objects.get(pk=g)
                 bid_area_to_car=BidArea(car=car,area=ar)
                 bid_area_to_car.save()
+                ao_from_one_area=AO.objects.filter(area=ar)
+                aos.append( ao_from_one_area)
+            new_car_email(car,aos)
                 
             print 'save the object'         
             return render_to_response('skrot.html', {'form':form,'text':'Du har nu regiteret din bil, den vil nu blive byde imod den højste pris'},context_instance=RequestContext(request))
@@ -77,7 +85,15 @@ def bil(request,carid):
             if form.is_valid():
                 b=ao.models.Bid(car=car,ao=a,price=form.cleaned_data['price'])
                 b.save()
-                return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
+                second_email=[Bid.objects.filter(car=car)[1].ao.email]
+                print second_email
+                if not second_email:
+                    pass
+                else:
+                    message= " Der kommer en bud som er højere end din, overbyder ham. Klik på linken eller kopi oa paste på din browser "+"http://127.0.0.1:8000/bil/%s "%(carid)                    
+                    send_mail("din byd er blevet overbudt",message, settings.DEFAULT_FROM_EMAIL, second_email,fail_silently=False)
+                new_bid=Bid.objects.filter(car=carid).order_by('price')
+                return render_to_response('bil.html', {'car':car,'bid':new_bid, 'form':form}, context_instance=RequestContext(request))
             else:
                 print "havn't save the bid"
                 return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
@@ -110,6 +126,15 @@ def expiredCar(request, carID):
     bid=highest_bid.objects.filter(carID=carID)
     return  render_to_response('expired_car.html', {'car':car,'bid':bid}, context_instance=RequestContext(request))
 
+def new_car_email(car, aos):
+    ao_list=[]
+    for ao in aos:
+        print ao
+        for a in ao:
+            ao_list.append(a)
+            pass
+    message="Hej \n"+"Her er en nye bil: "+ car.brand+" , fra "+car.year
+    send_mail("der kommer en ny bil",message, settings.DEFAULT_FROM_EMAIL, bcc=ao.list,fail_silently=False)
     
 
 
