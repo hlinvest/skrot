@@ -3,7 +3,7 @@
 login
 {% endblock %}
     {% block headmenu %}
-                	<li><a href="/" ><span></span>Velkom</a></li>
+                	<li><a href="/" ><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
                     <li> <a href='/biler/' > <span></span>Biler til at byde</a></li>
                      <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
@@ -16,7 +16,7 @@ login
 						<li><a href='/register/'><span></span> Register</a></li>
 					{% endif %}
 					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="" target="_parent"><span></span>Kontakt os</a></li>                   
+                    <li><a href="/kontakt/" target="_parent"><span></span>Kontakt os</a></li>                   
                   
                 </ul>
        {% endblock %}
@@ -27,12 +27,13 @@ Log ind på din konto her:
 <form action="" method="post">
 {% csrf_token%}
 <table>
+	<tr><td>{{form.errors}}</td></tr>
 	<tr><td><label for="username"}>Brugernavn: 
-	 {% if form.username.errors%}<span class="small">{{form.username.errors}}</span> {% endif%}</label></td>
+	 {% if form.username.errors%}<span class="small"></span> {% endif%}</label></td>
 	 <td>{{form.username}}</td></tr>
 	
 	<tr><td><label for="password">Password: 
-	{% if form.password.errors%}<span class="small"> {{form.password.errors}}</span> {% endif%}</label></td>
+	{% if form.password.errors%}<span class="small"></span> {% endif%}</label></td>
 	<td>{{form.password}}</td></tr>
 	
 	<tr><td></td><td>Glemt dit kodeord? <a href="/resetpassword/"><span style="color: red;">Tryk her</span></a></td></tr>

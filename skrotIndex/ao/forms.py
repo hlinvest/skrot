@@ -36,6 +36,8 @@ class RegiForm(ModelForm):
             AO.objects.get(email=email)
         except AO.DoesNotExist:
             return email
+        except AO.MultipleObjectsReturned:                   # it is for testing stage ,remeber change_profile form haas the same except
+            raise forms.ValidationError("den email er optaget.")
         raise forms.ValidationError("den email er optaget.")
       
     def clean_password(self):
@@ -58,6 +60,7 @@ class LoginForm(forms.Form):
         username=forms.CharField(label=(u'username'))
         password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
         
+        
 class ChangeProfile(ModelForm):
     def __init__(self, *args, **kwargs):                                       
         self.existed_email=kwargs.pop('existed_email')                         
@@ -75,6 +78,8 @@ class ChangeProfile(ModelForm):
                 AO.objects.get(email=email)
             except AO.DoesNotExist:
                 return email
+            except AO.MultipleObjectsReturned:
+                raise forms.ValidationError("den email er optaget.")
             raise forms.ValidationError("den email er optaget.")
         return email
     

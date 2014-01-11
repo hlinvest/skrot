@@ -27,26 +27,28 @@ byd på {{car.brand}}fra {{car.year}}
 				<tr><td>{{b.ao.company}}</td>  <td>{{b.price}}</td></tr>
 			{% endfor %}
 		{% endif %}
-		
-		{% if user.is_authenticated %}
-		<tr><td></td></tr>
-		<tr><td>afgiv din byd:</td></tr>
- 			<form action="" method="post">
- 			{% csrf_token %} 
- 				{% if form.price.errors %}<span color="red"> {{form.price.errors}}</span>{% endif %}
- 				{{form.car}}
- 				<tr><td>{{form.price}}</td><td><input type="submit" alt="register", value="Din byd"></td></tr>
- 			 </form>
- 		{% else %}
-		<h3> Log ind <a href="/login/{{car.id}}">her</a> og giv en bud.</h3>
- 		{% endif %}
+		{% if expired %}
+		<h3>Denne auktion er sluttet.</h3>
+		{% else%}
+				{% if user.is_authenticated %}
+				<tr><td></td></tr>
+				<tr><td>afgiv din byd:</td></tr>
+		 			<form action="" method="post">
+		 			{% csrf_token %} 
+		 				{% if form.price.errors %}<span color="red"> {{form.price.errors}}</span>{% endif %}
+		 				{{form.car}}
+		 				<tr><td>{{form.price}}</td><td><input type="submit" alt="register", value="Din byd"></td></tr>
+		 			 </form>
+		 		{% else %}
+				<h3> Log ind <a href="/login/{{car.id}}">her</a> og giv en bud.</h3>
+		 		{% endif %}
+		 {% endif %}
 	</table>
 	</div>
 {% endblock %}
 
 {% block rightbody %}
 		{% if not car.picture %}
-		not pic
 		{% else %} 
 			<br>
 			<div class="billede" align="left">

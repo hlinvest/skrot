@@ -53,10 +53,13 @@ class BidForm(forms.Form):
                 return price
         else:
             return price
-            
-    
-    
         
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=200)                                 
+    body = forms.CharField(max_length= 1000,widget=forms.Textarea)
+    
+                                       
 #class BidForm(ModelForm):
 #    car=forms.CharField()
 #    class Meta:

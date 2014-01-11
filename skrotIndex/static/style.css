@@ -440,7 +440,8 @@ table {
 	font-size: 16px; 	
 }
 th{
-		text-align: left;	}
+		text-align: left;	
+		width: 190px; }
 td{
 		width: 190px;
 		text-align: left;	}
@@ -486,6 +487,13 @@ padding:4px 2px;
 border:solid 1px #aacfe4;
 margin:2px 0 20px 10px;
 width:200px;
+}
+#stylized textarea{
+float:left;
+font-size:12px;
+padding:4px 2px;
+border:solid 1px #aacfe4;
+margin:2px 0 20px 10px;
 }
 /* ------------------------after login --------------*/
 

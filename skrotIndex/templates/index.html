@@ -21,7 +21,7 @@
         
             <div id="menu">
                 <ul>
-                	<li><a href="/" class="current"><span></span>Velkommen</a></li>
+                	<li><a href="/" class="current"><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
                     <li> <a href='/biler/' > <span></span>Byd på biler</a></li>
                      <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
@@ -34,7 +34,7 @@
 						<li><a href='/register/' target="_parent"><span></span> Registrer</a></li>
 					{% endif %}
 					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="" target="_parent"><span></span>Kontakt os</a></li>                   
+                    <li><a href="/kontakt/" target="_parent"><span></span>Kontakt os</a></li>                   
                   
                 </ul>
             </div> <!-- end of menu -->
@@ -106,18 +106,15 @@
             <div class="section_w320">
             
             	<h2>Seneste biler</h2>
-                
+                {% for c in car %}
                 <div class="news_section">
-                    <h3><a href="#">Etiam tempus tellus eget </a></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et ipsum sem, ut lobortis dui.</p>
+                    <h3><a href="{{site}}/bil/{{c.id}}">{{ c.brand}}</a></h3>
+                    <p>fra {{c.year}}, i {{c.address}}, ønkser afhentning: {% if c.pickup %} Ja {%else%} Nej {% endif %}</p>
                 </div>
                 
-                <div class="news_section">
-                    <h3><a href="#">Nam quis aliquet quam</a></h3>
-                    <p>Sed pharetra neque vel mauris auctor ornare. Maecenas urna lorem, consectetur eget consectetur id.</p>
-                </div>
+                {% endfor %}
                 
-                <div class="button_01"><a href="#">View All</a></div>
+                <div class="button_01"><a href="{{site}}/biler">Se alle bilerne</a></div>
             
             </div>
             

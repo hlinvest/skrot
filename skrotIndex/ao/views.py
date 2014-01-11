@@ -7,9 +7,12 @@ from ao.forms import RegiForm, LoginForm, ChangeProfile, Picture
 from ao import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from cars.models import Car
+from datetime import datetime
 
 def index(request):
-    return render_to_response('index.html', context_instance=RequestContext(request))
+    car=Car.objects.filter(end_time__gte =datetime.now()).order_by('start_time')[:2]
+    return render_to_response('index.html',{'car':car}, context_instance=RequestContext(request))
 
 def ao(request, area=None):
 
@@ -52,11 +55,14 @@ def userLogin(request, carid=None):
             password=form.cleaned_data['password' ]
             loginCustomer=authenticate(username=username,password=password)
             if loginCustomer is not None:
-                login(request,loginCustomer) 
-                if  carid is not None:
-                    return HttpResponseRedirect('/bil/%s/' %carid)
+                if loginCustomer.is_staff:
+                    return render_to_response('login.html', {'form':form,'text':'Administration skal logge ind på en anden side'},context_instance=RequestContext(request))
                 else:
-                    return HttpResponseRedirect('/profil/')
+                    login(request,loginCustomer) 
+                    if  carid is not None:
+                        return HttpResponseRedirect('/bil/%s/' %carid)
+                    else:
+                        return HttpResponseRedirect('/profil/')
             else:
                 return render_to_response('login.html', {'form':form,'text':'Burgernavn og password passer ikke'},context_instance=RequestContext(request))
         else:
