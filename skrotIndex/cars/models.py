@@ -17,9 +17,21 @@ class Car(models.Model):
         end_time=models.DateTimeField(db_index=True)
         bid_area=models.ManyToManyField('ao.Area',through='BidArea')
         
+        class Meta:
+            ordering=['end_time']
+        
         def save(self,*args,**kwargs):
-            self.slug=slugify(self.plate)                                                           #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
+            self.slug=slugify(self.brand+"-"+self.plate)                                                           #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
             super(Car,self).save(*args, **kwargs) 
+            
+        def delete(self, *args, **kwargs):
+            if not self.picture:
+                super(Car, self).delete(*args, **kwargs)
+            else:
+                print "thie car has picture" +self.picture
+                self.picture.delete(False)
+                super(Car, self).delete(*args, **kwargs)
+                super(Car, self).delete(*args, **kwargs)
             
         def __unicode__(self):
             return self.plate

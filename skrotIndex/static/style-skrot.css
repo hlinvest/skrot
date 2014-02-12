@@ -9,9 +9,7 @@ body {
 	color: #444444;
 	background: #ffffff;
 }
-a{
-	font-weight:bold;
-}
+
 
 a:link {text-decoration:none;}
 a:visited { color: #1C3066;}
@@ -58,7 +56,7 @@ h2 {
 	padding: 3px 0;
 	font-size: 16px;
 	font-weight: bold;
-	color: #000000;
+	
 }
 
 h3 {
@@ -126,7 +124,6 @@ h3 {
 	font-size: 26px;
 	color: #0981a9;
 	font-weight: bold;
-	text-decoration: none;
 }
 
 #site_title h1 a:hover {
@@ -136,10 +133,10 @@ h3 {
 
 #site_title h1 a span {
 	display: block;
-	font-size: 13px;
-	color: #333;
+	font-size: 15px;
+	color: #af0303;
 	font-weight: normal;
-	margin-top: 10px;
+	margin-top: 0px;
 }
 
 #site_title_bar_right_section {
@@ -151,23 +148,18 @@ h3 {
 
 #menu {
 	float: right;
-	margin-top: 20px;
+	margin-top: 18px;
 }
 
-#menu ul {
-	padding: 0;
-	margin: 0 auto;
-	list-style: none;
+#menu li {
+  margin: 0 5px;
+  padding: 0 0 8px;
+  float: left;
+  position: relative;
+  list-style: none;
 }
-
-#menu ul li {
-	padding: 0;
-	margin: 0px;
-	display: inline;
-}
-
-#menu ul li a {
-	float: left;
+#menu li a {
+ 	float: left;
 	display: block;
 	height: 20px;
 	padding: 2px 10px 0 5px;
@@ -177,9 +169,7 @@ h3 {
 	font-weight: bold;
 	text-decoration: none;
 	color: #074256;	
-	outline: none;
 }
-
 #menu li a:hover, #menu li .current {
 	position: relative;
 	color: #ffffff;
@@ -194,12 +184,11 @@ h3 {
 	height: 22px;
 	background:url(menu_hover_left.png) no-repeat;
 }
+#menu li ul.sub  {display: none;}
+#menu li:hover ul.sub {display: inline;
+}
 
-/* end of menu */
 
-/* end of site title */
-
-/* banner */
 
 #banner_wrapper {
 	width: 100%;
@@ -252,7 +241,7 @@ h3 {
 #content_wrapper {
 	width: 100%;
 	margin: 0 auto;	
-	/*background: #c1c1c1 url(content_bg.jpg) top repeat-x;*/
+	background: #c1c1c1 url(content_bg.jpg) top repeat-x;
 }
 
 #content {
@@ -263,8 +252,9 @@ h3 {
 }
 
 #content p {
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 }
+
 
 #content .service_box {
 	position: relative;
@@ -273,6 +263,10 @@ h3 {
 	height: 125px;
 	padding: 10px 30px;
 	background: url(service_box_bg.jpg) top center no-repeat;
+}
+.service_box a{
+	color: #0981a9;
+	
 }
 
 .service_box h3 {
@@ -286,6 +280,7 @@ h3 {
 	position: absolute;
 	top: 80px;
 	right: 30px;
+	margin-top:10px;
 }
 
 #conten .service_box p {
@@ -297,6 +292,12 @@ h3 {
 	clear: both;
 	width: 960px;
 }
+.section_w960 span {
+	font-size: 18px;
+}
+.section_w960 a{
+	font-weight:bold;
+}
 
 .section_w600 {
 	float: left;
@@ -306,7 +307,9 @@ h3 {
 
 .section_w320 {
 	float: left;
-	width: 320px;
+	width: 316px;
+	
+	
 }
 
 .news_section {
@@ -344,7 +347,7 @@ h3 {
 }
 #cssmenu ul {
   zoom: 1;
-  background: #8cc7db url(pattern.png) top left repeat;
+  background: #8cc7db top left repeat;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -443,8 +446,10 @@ th{
 		text-align: left;	
 		width: 190px; }
 td{
+		height:40px;
 		width: 190px;
-		text-align: left;	}
+		text-align: left;	
+		}
 		
 /* ----------- My Form ----------- */
 form{
@@ -467,6 +472,7 @@ float:right;
 #stylized .small{
 display:block;
 font-size:11px;
+color:red;
 font-weight:normal;
 text-align:right;
 width:140px;

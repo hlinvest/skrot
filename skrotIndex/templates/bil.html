@@ -8,16 +8,16 @@ byd på {{car.brand}}fra {{car.year}}
   <br>
 
 	<table >
-		<tr><td>Nummerplad</td> <td>{{car.plate}}</td></tr>
-		<tr><td>Mærk</td><td>{{car.brand}}</td></tr>
+		<tr><td>Nummerplade</td> <td>{{car.plate}}</td></tr>
+		<tr><td>Mærke</td><td>{{car.brand}}</td></tr>
 		<tr><td>Årgang</td> <td>{{car.year}}</td></tr>
 		<tr><td>Adresse</td> <td>{{car.address}}</td></tr>
 		<tr><td>By</td> <td>{{car.city}}</td></tr>
-		<tr><td>Ønsket af pickup</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
+		<tr><td>Ønskes afhentning</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
 	</table>     
 	
 <div class="auktion">
-<p><h2>Den aktion started {{car.start_time }} <br> Slutter {{car.end_time}}</h2> </p>
+<p><h2>Denne auktion startede {{car.start_time }} <br> Slutter {{car.end_time}}</h2> </p>
 	<p>{{text}}</p>
 	<table>
 			<tr><th>Auto ophugger</th>  <th>byd</th></tr>
@@ -32,7 +32,7 @@ byd på {{car.brand}}fra {{car.year}}
 		{% else%}
 				{% if user.is_authenticated %}
 				<tr><td></td></tr>
-				<tr><td>afgiv din byd:</td></tr>
+				<tr><td>afgiv din byd </td></tr>
 		 			<form action="" method="post">
 		 			{% csrf_token %} 
 		 				{% if form.price.errors %}<span color="red"> {{form.price.errors}}</span>{% endif %}
@@ -40,7 +40,7 @@ byd på {{car.brand}}fra {{car.year}}
 		 				<tr><td>{{form.price}}</td><td><input type="submit" alt="register", value="Din byd"></td></tr>
 		 			 </form>
 		 		{% else %}
-				<h3> Log ind <a href="/login/{{car.id}}">her</a> og giv en bud.</h3>
+				<h3> Log ind <a href="/login/{{car.slug}}">her</a> og giv en bud. </h3>
 		 		{% endif %}
 		 {% endif %}
 	</table>
@@ -52,7 +52,7 @@ byd på {{car.brand}}fra {{car.year}}
 		{% else %} 
 			<br>
 			<div class="billede" align="left">
-			<img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150">
+			<img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150"/>
 			</div>
 		{% endif %} 
 {% endblock %}

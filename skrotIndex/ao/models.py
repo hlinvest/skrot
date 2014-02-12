@@ -19,8 +19,12 @@ class AO(User):
 
     
     def save(self,*args,**kwargs):
-        self.slug=slugify(self.username)                                   #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
-        super(AO,self).save(*args, **kwargs)     
+        self.slug=slugify(self.company+'-'+str(self.tlf))                                   #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
+        super(AO,self).save(*args, **kwargs) 
+        
+    def delete(self, *args, **kwargs):
+        self.picture.delete(False)
+        super(AO, self).delete(*args, **kwargs)    
     
     
     def __unicode__(self):

@@ -6,14 +6,7 @@ import imghdr
 from skrotIndex import settings
 
 class RegiForm(ModelForm):
-    username=forms.RegexField(
-        label=(u"username"), max_length=30, regex=r"^[\w.@+-]+$",
-        help_text = ("Required. 30 characters or fewer. Letters, digits and "
-                      "@/./+/-/_ only."),
-        error_messages = {
-            'invalid': ("This value may contain only letters, numbers and "
-                         "@/./+/-/_ characters.")})
-#    username = forms.CharField()
+    username = forms.CharField()
     password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
     password2=forms.CharField(label=(u'password2'), widget=forms.PasswordInput(render_value=False))
     web=forms.URLField(required=False)
@@ -58,16 +51,17 @@ class RegiForm(ModelForm):
 class LoginForm(forms.Form):  
                                                                                           
         username=forms.CharField(label=(u'username'))
-        password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
+        password=forms.CharField(max_length=10, label=(u'password'), widget=forms.PasswordInput(render_value=False))
         
         
 class ChangeProfile(ModelForm):
+    web=forms.URLField(required=False)
     def __init__(self, *args, **kwargs):                                       
         self.existed_email=kwargs.pop('existed_email')                         
         super(ChangeProfile, self).__init__(*args,**kwargs) 
     class Meta:
         model=AO
-        exclude=('username','picture','password','password2','last_login', 'bid','slug','date_joined','web')
+        exclude=('username','picture','password','password2','last_login', 'bid','slug','date_joined',)
         
 
     def clean_email(self):

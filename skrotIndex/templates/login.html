@@ -3,22 +3,28 @@
 login
 {% endblock %}
     {% block headmenu %}
-                	<li><a href="/" ><span></span>Forside</a></li>
+               	<li><a href="/"><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/' > <span></span>Biler til at byde</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+                    <li><a href="/auto_ophugger/" ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/"  class="current"><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
 					{%else%} 
-						<li><a href='/login/' class="current"> <span></span>Login</a> </li>
-						<li><a href='/register/'><span></span> Register</a></li>
+					 <li><a href='#'><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/'  class="current"> <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
 					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="/kontakt/" target="_parent"><span></span>Kontakt os</a></li>                   
-                  
-                </ul>
        {% endblock %}
 {%block content %}
 Log ind på din konto her:

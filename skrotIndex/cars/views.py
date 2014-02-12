@@ -12,7 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from skrotIndex import settings
+from django.core.mail.message import EmailMessage
+
 from django.utils import timezone
+
 
 
 def skrot(request):
@@ -20,19 +23,14 @@ def skrot(request):
         form=CarForm(request.POST,request.FILES )
         if form.is_valid():
             d=form.cleaned_data['duration']
-            
-            print d
-            print 'here is the string of now '+str(d)
-            print datetime.now()
-            now =datetime.now() #datetime.now().strftime('%y-%m-%d %H:%M')
-            end=datetime.now()+timedelta(days=int(d))
-            print str(now)+"end time"+str(end)
+            now = datetime.now() #datetime.now().strftime('%y-%m-%d %H:%M')
+            end=now+timedelta(days=int(d))
             
             car=models.Car(plate=form.cleaned_data['plate'], year=form.cleaned_data['year'], brand=form.cleaned_data['brand'],
                            address=form.cleaned_data['address'],  city=form.cleaned_data['city'],pickup=form.cleaned_data['pickup'], email=form.cleaned_data['email'],
                            tlf=form.cleaned_data['tlf'], start_time=now, end_time=end, picture=form.cleaned_data['picture'], )         
             car.save()
-            car.picture.save(car.plate,form.cleaned_data['picture'],save=True )  
+#            car.picture.save(car.plate,form.cleaned_data['picture'],save=True )  
             aos=[]
             for g in request.POST.getlist('bid_area'):
                 ar=Area.objects.get(pk=g)
@@ -41,26 +39,23 @@ def skrot(request):
                 ao_from_one_area=AO.objects.filter(area=ar)
                 aos.append( ao_from_one_area)
             new_car_email(car,aos)
-                
-            print 'save the object'         
-            return render_to_response('skrot.html', {'form':form,'text':'Du har nu regiteret din bil, den vil nu blive byde imod den højste pris'},context_instance=RequestContext(request))
+                         
+            return render_to_response('skrot.html', {'form':form,'text':'Du har nu registreret din bil i vores database, og er nu klar til at blive budt på.'},context_instance=RequestContext(request))
         else:
-            print 'invalid information'
-            return render_to_response('skrot.html', {'form':form, 'text':"forkert indsatning,  indtaste bilens information igen"}, context_instance=RequestContext(request))
+            return render_to_response('skrot.html', {'form':form, 'text':"Forkert indtastning, indtast bilens oplysninger igen."}, context_instance=RequestContext(request))
     else:
         form=CarForm() 
-        print 'directly'
-        return render_to_response('skrot.html', {'form':form, 'text': 'indtaste bilens information her.'}, context_instance=RequestContext(request))
+        return render_to_response('skrot.html', {'form':form, 'text': 'Indtast bilens informationer her.'}, context_instance=RequestContext(request))
     
 def biler(request, area=None):
     
     if area is None:
         car_list=Car.objects.filter(end_time__gte =datetime.now())
-        paginator = Paginator(car_list, 25)
+        paginator = Paginator(car_list, 20)
     else:
         ar=Area.objects.get(area=area)
         car_list=Car.objects.filter(bid_area=ar,end_time__gte =datetime.now()).order_by('start_time') 
-        paginator = Paginator(car_list, 25)
+        paginator = Paginator(car_list, 20)
     page = request.GET.get('page')
     try:
         car= paginator.page(page)
@@ -73,9 +68,9 @@ def biler(request, area=None):
 
     return render_to_response('skrot_biler.html', {'car':car, 'area':area}, context_instance=RequestContext(request))
 from django.utils import timezone
-def bil(request,carid):
-    car=Car.objects.get(pk=carid)
-    bid=Bid.objects.filter(car=carid).order_by('price')
+def bil(request,slug):
+    car=Car.objects.get(slug=slug)
+    bid=Bid.objects.filter(car=car).order_by('price')
     now = timezone.now()
     if car.end_time<now:
         expired=True
@@ -91,27 +86,32 @@ def bil(request,carid):
             except a.DoesNotExist:
                 return render_to_response('bil.html', {'car':car, 'text': 'Du kan ikke byde med din konto.'}, context_instance=RequestContext(request))
             if request.method=='POST':
-                form=BidForm(request.POST , initial={'car':carid} )
+                form=BidForm(request.POST , initial={'car':car.id} )
                 if form.is_valid():
                     b=ao.models.Bid(car=car,ao=a,price=form.cleaned_data['price'])
                     b.save()
-                    second_email=[Bid.objects.filter(car=car)[1].ao.email]
-                    print second_email
-                    if not second_email:
+                    bid_no=Bid.objects.filter(car=car)
+                    if bid_no.exists() :
+                        print bid_no
                         pass
                     else:
-                        message= " Der kommer en bud som er højere end din, overbyder ham. Klik på linken eller kopi oa paste på din browser "+"http://127.0.0.1:8000/bil/%s "%(carid)                    
-                        send_mail("din byd er blevet overbudt",message, settings.DEFAULT_FROM_EMAIL, second_email,fail_silently=False)
-                    new_bid=Bid.objects.filter(car=carid).order_by('price')
+                        second_email=[Bid.objects.filter(car=car)[1].ao.email]
+                        print second_email
+                        if not second_email:
+                            pass
+                        else:
+                            message= " Der er kommet et bud, som er højere end dit. Hvis du vil byde igen, så klik på linket eller indsæt det i din browser "+settings.SITE_DOMAIN+"bil/%s" %(slug)                    
+                            send_mail("Dit bud er blevet overbudt",message, settings.DEFAULT_FROM_EMAIL, second_email,fail_silently=False)
+                    new_bid=Bid.objects.filter(car=car).order_by('price')
                     return render_to_response('bil.html', {'car':car,'bid':new_bid, 'form':form, 'expired':expired}, context_instance=RequestContext(request))
                 else:
                     print "havn't save the bid"
                     return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form,'expired':expired}, context_instance=RequestContext(request))
             else:
-                form=BidForm(initial={'car':carid} )
+                form=BidForm(initial={'car':car.id} )
                 return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form, 'expired':expired}, context_instance=RequestContext(request))    
         else:
-            form=BidForm(initial={'car':carid} )
+            form=BidForm(initial={'car':car.id} )
             return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
     
 @login_required
@@ -127,7 +127,7 @@ def deleteBid(request,bidID):
         bid.delete()
         return redirect('ao.views.profile')
     else:
-        html="<html><body>lad vær med det. det er forbudt.</body></html>"
+        html="<html><body>Lad vær med det. Det er forbudt.</body></html>"
         return HttpResponse(html)
         
 
@@ -141,11 +141,13 @@ def new_car_email(car, aos):
     for ao in aos:
         print ao
         for a in ao:
-            ao_list.append(a)
-            pass
-    message="Hej \n"+"Her er en nye bil: "+ car.brand+" , fra "+car.year
-    send_mail("der kommer en ny bil",message, settings.DEFAULT_FROM_EMAIL, bcc=ao.list,fail_silently=False)
-    
+            print a.email
+            ao_list.append(a.email)
+    print ao_list
+        
+    message="Hej \n"+"Ny bil på auktion: "+ car.brand+" , fra "+str(car.year)+"Click på linken "+settings.SITE_DOMAIN+"bil/"+car.slug 
+    email = EmailMessage("Der blev lagt en ny bil på siden",message, settings.DEFAULT_FROM_EMAIL,[],ao_list)
+    email.send(fail_silently=False)
 
 def contactUs(request):
     if request.method=="POST":
@@ -155,9 +157,9 @@ def contactUs(request):
             email=form.cleaned_data['email']
             body=form.cleaned_data['body']
             print name+email+body
-            return render_to_response('contact.html', {'form':form, 'text':"Dit spørgsmål er sent, vi vil svare dig hurtig som muglig!"}, context_instance=RequestContext(request))
+            return render_to_response('contact.html', {'form':form, 'text':"Dit spørgsmål er sendt, vi vil svare dig hurtigst mugligt!"}, context_instance=RequestContext(request))
         else:
-            return render_to_response('contact.html', {'form':form, 'text':"forkert indsatning"}, context_instance=RequestContext(request))
+            return render_to_response('contact.html', {'form':form, 'text':"Forkert indtastning"}, context_instance=RequestContext(request))
     else:
         form=ContactForm() 
         return render_to_response('contact.html', {'form':form}, context_instance=RequestContext(request))

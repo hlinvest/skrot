@@ -1,22 +1,28 @@
 {% extends "ophugger.html" %}
 {% block title %} Register {% endblock%}
  {% block headmenu %}
-                	<li><a href="/" ><span></span>Forside</a></li>
+                	<li><a href="/"><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' class="current"> <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/' > <span></span>Biler til at byde</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/" ><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+                    <li><a href="/auto_ophugger/"  ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
 					{%else%} 
-						<li><a href='/login/'> <span></span>Login</a> </li>
-						<li><a href='/register/'><span></span> Register</a></li>
+					 <li><a href='#'><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
 					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="/kontakt/"><span></span>Kontakt os</a></li>                   
-                  
-                </ul>
        {% endblock %}
 {% block content %}
 <h2>{{text}}</h2>
@@ -25,7 +31,7 @@
 	{% csrf_token %} 
 	<table>
 		<tr><td><label for="nummer plader" >Nummer plader:
-		{% if form.plate.errors %}  <span class="small">skriv din nummerplader</span>  {%endif%}</label></td><td>{{form.plate}}</td>
+		{% if form.plate.errors %}  <span class="small">{{form.plate.errors}}</span>  {%endif%}</label></td><td>{{form.plate}}</td>
 		</tr>
 		
 	
@@ -38,7 +44,7 @@
 		{% if form.brand.errors %}  <span class="small">skriv en gyldig bilmærk</span>  {%endif%}</label></td>
 		<td>{{form.brand}} </td></tr>
 		
-		<tr><td><label for="id_password2">Hvor er bilen:
+		<tr><td><label for="id_password2">Bilens lokation:
 		{% if form.adress.errors %}  <span class="small">hvor befinder bilen </span>  {%endif%}</label></td>
 		<td>{{form.address}}</td></tr>
 		
@@ -67,7 +73,7 @@
 		<td>{{form.picture}}</td></tr>
 		
 		<tr><td><label for="hvilke område">Hvilke område skal ophugger være:
-		<span class="small">hoold ctrl ind eller cmd på mac for at vælge flere</span></label></td>
+		<span class="small">hold ctrl ind eller cmd på mac for at vælge flere {%if form.bid_area.errors %}{{form.bid_area.errors}}{% endif %}</span></label></td>
 		 <td>{{form.bid_area}}</td></tr>
 		 
 		<tr><td></td><td><input type="submit" alt="set på aktion", value="register"></td></tr>

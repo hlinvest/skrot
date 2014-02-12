@@ -9,18 +9,30 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from cars.models import Car
 from datetime import datetime
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
+    print datetime.now()
+#    print timezone.localtime(timezone.now())
     car=Car.objects.filter(end_time__gte =datetime.now()).order_by('start_time')[:2]
     return render_to_response('index.html',{'car':car}, context_instance=RequestContext(request))
 
 def ao(request, area=None):
 
     if area is None:
-        ao=AO.objects.filter( is_active=True)
+        ao_list=AO.objects.filter( is_active=True)
+        paginator = Paginator(ao_list, 20)
     else:
         ar=Area.objects.get(area=area)
-        ao=AO.objects.filter( area=ar, is_active=True)            
+        ao_list=AO.objects.filter( area=ar, is_active=True)
+        paginator = Paginator(ao_list, 20) 
+    page = request.GET.get('page')
+    try:
+        ao= paginator.page(page)
+    except PageNotAnInteger:
+        ao = paginator.page(1)
+    except EmptyPage:
+        ao = paginator.page(paginator.num_pages)           
     return render_to_response('ophugger.html', {'ao':ao, 'area':area}, context_instance=RequestContext(request))
 
 def register(request):
@@ -44,7 +56,7 @@ def register(request):
         form=RegiForm() 
         return render_to_response('register.html', {'form':form}, context_instance=RequestContext(request))
     
-def userLogin(request, carid=None): 
+def userLogin(request, slug=None): 
                                         
     if request.user.is_authenticated():
         return HttpResponseRedirect('/profil/')
@@ -59,8 +71,8 @@ def userLogin(request, carid=None):
                     return render_to_response('login.html', {'form':form,'text':'Administration skal logge ind på en anden side'},context_instance=RequestContext(request))
                 else:
                     login(request,loginCustomer) 
-                    if  carid is not None:
-                        return HttpResponseRedirect('/bil/%s/' %carid)
+                    if  slug is not None:
+                        return HttpResponseRedirect('/bil/%s/' %slug)
                     else:
                         return HttpResponseRedirect('/profil/')
             else:
@@ -92,7 +104,7 @@ def editProfile(request):
         if request.method=='POST':
             form=ChangeProfile(request.POST,initial={'company':ao.company, 'email':ao.email,
                                     'cvr':ao.cvr,'street':ao.street, 'postcode':ao.postcode,'city':ao.city, 'area':ao.area,
-                                    'tlf':ao.tlf,'is_active':ao.is_active,'description':ao.description}, existed_email=ao.email)
+                                    'tlf':ao.tlf,'web':ao.web,'description':ao.description}, existed_email=ao.email)
             if form.is_valid():
                 print "in is_valid"
                 saveChange(ao, form)
@@ -104,7 +116,7 @@ def editProfile(request):
             print" not post" 
             form=ChangeProfile(initial={'company':ao.company, 'email':ao.email,
                                     'cvr':ao.cvr,'street':ao.street, 'postcode':ao.postcode,'city':ao.city, 'area':ao.area,
-                                    'tlf':ao.tlf,'is_active':ao.is_active,'description':ao.description},existed_email=ao.email)        
+                                    'tlf':ao.tlf,'web':ao.web,'description':ao.description},existed_email=ao.email)        
             return render_to_response('editprofile.html',{'ao':ao, 'form':form}, context_instance=RequestContext(request))
     
 
@@ -165,5 +177,7 @@ def deleteProfile(request):
     ao.delete()
     logout(request)
     return HttpResponseRedirect("/")
+def about_us(request):
+    return render_to_response('aboutus.html')
 
     

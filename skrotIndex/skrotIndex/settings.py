@@ -14,11 +14,12 @@ ADMINS = (
 MANAGERS = ADMINS
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'faahjaelp@gmail.com'
-EMAIL_HOST_PASSWORD = 'djangoserver'
-DEFAULT_FROM_EMAIL = 'faahjaelp@hotmail.com'
+EMAIL_HOST_USER = 'skrotindex'
+EMAIL_HOST_PASSWORD = '20000000'
+DEFAULT_FROM_EMAIL = 'info@skrotindex.dk'
+SERVER_EMAIL = 'info@skrotindex.dk'
 
 
 DATABASES = {
@@ -34,15 +35,15 @@ DATABASES = {
 }
 DATABASE_OPTIONS = { "init_command": "SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED", }
 
-CRON_CLASSES = [
-    "cars.cron.MyCronJob",
-    # ...
-]
+#CRON_CLASSES = [
+#    "cars.cron.MyCronJob",
+#    # ...
+#]
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-MAX_PIC_SIZE=1500000
+MAX_PIC_SIZE=1000000
 
 
 
@@ -58,7 +59,7 @@ TIME_ZONE = 'Europe/Copenhagen'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1
+SITE_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -69,7 +70,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -146,7 +147,7 @@ INSTALLED_APPS = (
      'django.contrib.admin',
      'cars',
      'ao',
-     "django_cron",
+     #"django_cron",
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -180,5 +181,6 @@ LOGGING = {
     }
 }
 
-
-
+#from django.contrib.sites.models import Site
+#SITE_DOMAIN= Site.objects.get_current().domain
+SITE_DOMAIN='127.0.0.1:8000/'

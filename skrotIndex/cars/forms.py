@@ -23,7 +23,7 @@ class CarForm(ModelForm):
             Car.objects.get(plate=plate)
         except Car.DoesNotExist:
            return plate
-        raise forms.ValidationError('der er en som er regiteret med den nummerplade på vores side.')
+        raise forms.ValidationError('der er allerede en bil som regiteret med den nummerplade.')
         
     def clean_picture(self):
         picture=self.cleaned_data['picture']

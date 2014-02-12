@@ -4,6 +4,7 @@
 redigere {{ao.company}}s profil
 {% endblock %}
 {% block content %}
+<a href="/profil/" ><h3>Tilbage til dit profil</h3></a> 
 <h2>Du kan ændre din profil her</h2>
 {{text}}
 <div  id="stylized" class="form">
@@ -42,8 +43,12 @@ redigere {{ao.company}}s profil
 		{% if form.area.errors %}  <span class="small">vælg et gyldigt område </span>  {%endif%}</label></td>
 		<td> {{form.area}}</td></tr>
 		
+		<tr><td><label for="id_web">Website:
+		{% if form.web.errors %}  <span class="small">{{form.web.errors}} </span>  {%endif%}</label></td>
+		<td> {{form.web}}</td></tr>
 		
-		<tr><td><label for="id_description">Beskriv lidt om værkstedet:</label></td>
+		
+		<tr><td><label for="id_description">Skriv lidt om værkstedet:</label></td>
 		 <td>{{form.description}}</td></tr>
 			 
 		<tr><td></td><td><input type="submit" alt="Ændre", value="Ændre"></td></tr>

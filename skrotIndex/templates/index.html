@@ -6,37 +6,45 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 {% load staticfiles %}
-<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'style-skrot.css' %}" rel="stylesheet" type="text/css" />
+<link rel="Shortcut Icon" href="{% static 'icon_4.png' %}" />
 </head>
 <body>
 
 <div id="site_title_bar_wrapper">
 	<div id="site_title_bar">
     	<div id="site_title">
-            <h1><a href="/">SKROTINDEX<span>Få det højeste bud på din bil</span>
-            </a></h1>
+    	<img src="{% static 'testing.jpg'%}" height=150; px width=150px;></img>
+            <!-- <h1><a href="/">SKROTINDEX.DK<span>
+            Højeste skrotpræmie for din bil</span>
+            </a></h1>-->
         </div>
         
         <div id="site_title_bar_right_section">
         
             <div id="menu">
-                <ul>
-                	<li><a href="/" class="current"><span></span>Forside</a></li>
+              	<li><a href="/" class="current"><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/' > <span></span>Byd på biler</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+                    <li><a href="/auto_ophugger/"  ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
 					{%else%} 
-						<li><a href='/login/' target="_parent"> <span></span>Login</a> </li>
-						<li><a href='/register/' target="_parent"><span></span> Registrer</a></li>
+					 <li><a href='#'><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
 					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="/kontakt/" target="_parent"><span></span>Kontakt os</a></li>                   
-                  
-                </ul>
             </div> <!-- end of menu -->
             
 		</div>        
@@ -48,9 +56,8 @@
 <div id="banner_wrapper">
 
 	<div id="banner">
-    
-    	<h2>Work with us for your <span>SUCCESS</span></h2>
-       	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit est tincidunt urna consectetur et fringilla neque tristique. Vestibulum vel est vitae lectus molestie dapibus. Donec nec est eros. In neque arcu, malesuada at ultrices a, vehicula pharetra mi.</p>
+       	<p><b>Skrotindex.dk linker dig op til alle autoophuggere i Danmark, så du som bilejer sikrer dig den bedst mulige skrotpris. Når Skrotindex.dk har fundet den højeste skrotpræmie, modtager du tre tilbud fra din nærmeste ophugger - så enkelt er det. 
+</b></p>
 		<!--<a href="#">Se mere <span>&raquo;</span></a>-->
     
     </div> <!-- end of banner -->
@@ -63,8 +70,8 @@
     
     	<div class="service_box">
         	
-             <a href="/skrot/"><h3>Skrot din bil</h3></a>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit est tincidunt urna consectetur et fringilla.</p>
+             <a href="/skrot/"><h2>Skrot din bil</h2></a>
+            <p>Indhent 3 gratis og uforpligtende tilbud fra din nærmeste autoophugger </p>
             <a href="/skrot/"><img src="static/icon_1.png" alt="image 1" /></a>
            
                     
@@ -72,16 +79,17 @@
         
         <div class="service_box">
         	
-            <a href="/auto_ophugger/"><h3>Find en autoophugger</h3></a>
-            <p>Aenean adipiscing sollicitudin urna. Praesent sed augue risus. Duis fringilla erat vel neque facilisis nec rutrum nisl vestibulum.</p>
-            <a href="/auto_ophugger/" title="照片"  class="service_box_two" target="_blank"><img src="static/icon_2.png" title="autoophugerne" alt="autoophuggerne" /></a>
+            <a href="/auto_ophugger/"><h2>Find en autoophugger</h2></a>
+            <p>Find en skrotforhandler nær dig – se den samlede oversigt over autoophuggere i dit nærområde.</p>
+            <a href="/auto_ophugger/"><img src="static/icon_2.png" title="autoophugerne" alt="autoophuggerne" /></a>
                     
         </div>
         
 		<div class="service_box">
         	
-            <a href="/biler/"><h3>Byd på en bil, hvis du er en autoophugger</h3></a>
-            <p>Done,fringilla convallis metus. Pellentesque sed libero ligula.</p>
+            <a href="/biler/"><h2>For autoophugger </h2></a>
+            <p>Som autoophugger kan du her afgive dit bud på en skrotbil.   
+            </p>
             <a href=""><img src="static/icon_3.png" alt="image 3" /></a>
            
                     
@@ -93,14 +101,12 @@
         
         	<div class="section_w600">
             	
-                <h2>Welcome to free css templates</h2>
+                <h2>Om Skrotindex.dk </h2>
                 
                 <div class="image_wrapper fl_image"><img src="static/image_01.jpg" alt="image 10" width="200" height="133" /></div>
                 
-              <p class="em_text">Free CSS Templates are provided by TemplateMo.com You may download, modify and apply this template for your websites.</p>
+              <p class="em_text">Skrotindex.dk skaber gennemsigtighed ved at samle alle skrotforhandler i Danmark under et site, <a href="/om-os">læs mere</a>  </p>
                 
-                <p>Aenean ornare nibh adipiscing arcu pellentesque ac posuere lacus lobortis. Sed massa turpis, blandit sed condimentum fermentum, porta eu urna. Maecenas vitae neque sed mi consequat pellentesque. </p>
-                <p>Suspendisse sodales hendrerit feugiat. Duis non eros diam, ut pharetra eros. Aenean bibendum, ligula in facilisis laoreet, dolor leo venenatis enim, ut posuere tortor justo non mi. </p>
        	  </div>
             
             <div class="section_w320">

@@ -1,20 +1,28 @@
 {% extends "ophugger.html" %}
 {% block title %} Register {% endblock%}
   {% block headmenu %}
-                	<li><a href="/" ><span></span>Forside</a></li>
+                	<li><a href="/"><span></span>Forside</a></li>
                 	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
-                    <li> <a href='/biler/'> <span></span>Byd på biler</a></li>
-                     <li><a href="/auto_ophugger/"><span></span>Auto ophugger</a></li><br></br>
-                    {% if user.is_authenticated %}
-                    	<li><a href="/profil/" ><span></span>Profil &nbsp;&nbsp;</a></li>
-	                    <li><a href="/logud/"><span></span> Log ud</a> </li>
-	                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+                    <li><a href="/auto_ophugger/"  ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/" ><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/" ><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
 					{%else%} 
-						<li><a href='/login/'> <span></span>Login</a> </li>
-						<li><a href='/register/' class="current"><span></span> Register</a></li>
-					{% endif %}
-					<li><a href=""><span></span>Om os</a></li>
-                    <li><a href="/kontakt/"><span></span>Kontakt os</a></li>                   
+					 <li><a href='#'><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
+				{% endif %}                    
        {% endblock %}
 {% block content %}
 <div  id="stylized" class="form">
@@ -30,8 +38,8 @@
 		<td>{{form.cvr}}</td></tr>
 
 		<tr><td><label for="username" >Brugernavn:
-		<span class="small">a-z&1-9</span>
-		{% if form.username.errors %}  <span class="small">skriv en brugnavn</span>  {%endif%}</label></td>
+		<span class="small">Brug bogstav A-z& tal 0-9</span>
+		{% if form.username.errors %}  <span class="small">{{form.username.errors}}</span>  {%endif%}</label></td>
 		<td>{{form.username}}</td></tr>
 		
 		<tr><td><label for="password">Password:
@@ -44,7 +52,7 @@
 		
 		
 		<tr><td><label for="id_email">Email:
-		{% if form.email.errors %}  <span class="small">Skriv en gyldig email</span>  {%endif%}</label></td>
+		{% if form.email.errors %}  <span class="small">{{form.email.errors}}</span>  {%endif%}</label></td>
 		<td> {{form.email}}</td></tr>
 				
 		<tr><td><label for="id_tlf">Telefon:
