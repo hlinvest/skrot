@@ -93,7 +93,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-            os.path.join(SITE_ROOT,'static'),
+            os.path.join(SITE_ROOT,'static2'),
 )
 
 # List of finder classes that know how to find static files in
@@ -131,12 +131,13 @@ ROOT_URLCONF = 'skrotIndex.urls'
 WSGI_APPLICATION = 'skrotIndex.wsgi.application'
 
 TEMPLATE_DIRS = (
-  os.path.join(SITE_ROOT, 'templates'),
+  os.path.join(SITE_ROOT, 'template2'),
 )
 TEMPLATE_CONTEXT_PROCESSORS = ('skrotIndex.context_processor.all_areas','django.contrib.auth.context_processors.auth' ,
                                "django.core.context_processors.debug","django.core.context_processors.i18n",
                                "django.core.context_processors.media","django.core.context_processors.static",
-                               "django.core.context_processors.tz","django.contrib.messages.context_processors.messages",)
+                               "django.core.context_processors.tz","django.contrib.messages.context_processors.messages",
+                               'django.core.context_processors.request',)
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -147,6 +148,7 @@ INSTALLED_APPS = (
      'django.contrib.admin',
      'cars',
      'ao',
+     'navigation',
      #"django_cron",
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

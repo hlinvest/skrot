@@ -12,7 +12,8 @@ date_choice= [(i,i) for i in range(1,7)]
 class CarForm(ModelForm):
     duration=forms.ChoiceField(choices=date_choice)
     picture=forms.FileField(required=False)
-    address=forms.CharField(widget=forms.TextInput(attrs={'size':'40'}))
+    accpetTerms=forms.BooleanField( error_messages={'required': 'accepterer brugervilkår og fortrolighedspolitik for at udføre registrering'},
+    label="Terms")
     
     class Meta:
         model=Car
@@ -22,7 +23,7 @@ class CarForm(ModelForm):
         try:
             Car.objects.get(plate=plate)
         except Car.DoesNotExist:
-           return plate
+            return plate
         raise forms.ValidationError('der er allerede en bil som regiteret med den nummerplade.')
         
     def clean_picture(self):

@@ -42,10 +42,10 @@ def skrot(request):
                          
             return render_to_response('skrot.html', {'form':form,'text':'Du har nu registreret din bil i vores database, og er nu klar til at blive budt på.'},context_instance=RequestContext(request))
         else:
-            return render_to_response('skrot.html', {'form':form, 'text':"Forkert indtastning, indtast bilens oplysninger igen."}, context_instance=RequestContext(request))
+            return render_to_response('skrot.html', {'form':form, 'text':"Forkert indtastning, indtast bilens oplysninger igen"}, context_instance=RequestContext(request))
     else:
         form=CarForm() 
-        return render_to_response('skrot.html', {'form':form, 'text': 'Indtast bilens informationer her.'}, context_instance=RequestContext(request))
+        return render_to_response('skrot.html', {'form':form, 'text': 'Indtast bilens informationer her'}, context_instance=RequestContext(request))
     
 def biler(request, area=None):
     
@@ -114,10 +114,10 @@ def bil(request,slug):
             form=BidForm(initial={'car':car.id} )
             return render_to_response('bil.html', {'car':car,'bid':bid, 'form':form}, context_instance=RequestContext(request))
     
-@login_required
-def confirmDeleteBid(request,bidID):
-    bid=Bid.objects.get(pk=bidID)
-    return render_to_response('delete_bid_q.html', {'bid':bid}, context_instance=RequestContext(request))
+#@login_required  doesn't required it in boostrap version
+#def confirmDeleteBid(request,bidID):
+#    bid=Bid.objects.get(pk=bidID)
+#    return render_to_response('delete_bid_q.html', {'bid':bid}, context_instance=RequestContext(request))
 
 @login_required
 def deleteBid(request,bidID):

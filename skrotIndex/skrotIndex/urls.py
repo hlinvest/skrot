@@ -15,7 +15,7 @@ urlpatterns = patterns('ao.views',
 
     (r'^admin/', include(admin.site.urls)),
     (r'^$', 'index'),
-    (r'^register/$','register'),  
+    (r'^registrer/$','register'),  
     (r'^login/$','userLogin'),
     (r'^login/(?P<slug>.*)','userLogin'),
     (r'^profil/$','profile'),
@@ -35,7 +35,7 @@ urlpatterns+=patterns('cars.views',
             (r'^biler/$', 'biler'),
             (r'^kontakt/$', 'contactUs'),
             (r'^bil/(?P<slug>.*)/$', 'bil'), 
-            (r'^bekraeft_slet_bud/(?P<bidID>.*)/$', 'confirmDeleteBid'), 
+  #          (r'^bekraeft_slet_bud/(?P<bidID>.*)/$', 'confirmDeleteBid'),  doesn't required it in boostrap version
             (r'^slet_bud/(?P<bidID>.*)/$', 'deleteBid'),  
             (r'afsluttende/(?P<carID>.*)/$', 'expiredCar'),
     

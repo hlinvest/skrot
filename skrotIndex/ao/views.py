@@ -21,11 +21,11 @@ def ao(request, area=None):
 
     if area is None:
         ao_list=AO.objects.filter( is_active=True)
-        paginator = Paginator(ao_list, 20)
+        paginator = Paginator(ao_list, 9)
     else:
         ar=Area.objects.get(area=area)
         ao_list=AO.objects.filter( area=ar, is_active=True)
-        paginator = Paginator(ao_list, 20) 
+        paginator = Paginator(ao_list, 9) 
     page = request.GET.get('page')
     try:
         ao= paginator.page(page)
@@ -37,12 +37,12 @@ def ao(request, area=None):
 
 def register(request):
     if request.user.is_authenticated():       # is a section tool
-        return HttpResponseRedirect('/profile/')      
+        return HttpResponseRedirect('/profil/')      
     if request.method=='POST': 
         form=RegiForm(request.POST )
         if form.is_valid():
             ar=Area.objects.get(area=form.cleaned_data['area'])
-            ao=models.AO(username=form.cleaned_data['username'],company=form.cleaned_data['company'], email=form.cleaned_data['email'], description=form.cleaned_data['description'],
+            ao=models.AO(username=form.cleaned_data['email'],company=form.cleaned_data['company'], email=form.cleaned_data['email'], description=form.cleaned_data['description'],
                            cvr=form.cleaned_data['cvr'],  street=form.cleaned_data['street'], postcode=form.cleaned_data['postcode'],
                            city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], web=form.cleaned_data['web'],is_active=True, is_superuser=False)
             ao.set_password( form.cleaned_data['password'])    
@@ -51,10 +51,10 @@ def register(request):
             loginForm=LoginForm()           
             return render_to_response('login.html',{'form':loginForm,'text':'færdig med at registere, du kan nu logge in'},context_instance=RequestContext(request))
         else:
-            return render_to_response('register.html', {'form':form}, context_instance=RequestContext(request))
+            return render_to_response('register.html', {'form':form, 'text':'Forkert indtastning, prøv igen'}, context_instance=RequestContext(request))
     else:
         form=RegiForm() 
-        return render_to_response('register.html', {'form':form}, context_instance=RequestContext(request))
+        return render_to_response('register.html', {'form':form,'text': 'Indtast din information for at blive registreret'}, context_instance=RequestContext(request))
     
 def userLogin(request, slug=None): 
                                         
@@ -135,7 +135,7 @@ def saveChange(ao, form):
     ao.save()
     
 def ophugger(request, id):
-    ao=AO.objects.get(pk=id)
+    ao=AO.objects.get(slug=id)
     return render_to_response('single_ao.html',{'ao':ao}, context_instance=RequestContext(request))
 
 @login_required    

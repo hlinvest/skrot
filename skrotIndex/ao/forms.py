@@ -6,14 +6,15 @@ import imghdr
 from skrotIndex import settings
 
 class RegiForm(ModelForm):
-    username = forms.CharField()
     password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
     password2=forms.CharField(label=(u'password2'), widget=forms.PasswordInput(render_value=False))
     web=forms.URLField(required=False)
+    accpetTerms=forms.BooleanField( error_messages={'required': 'accepterer brugervilkår og fortrolighedspolitik for at udføre registrering'},
+    label="Terms")
     
     class Meta:
         model=AO
-        exclude=('picture','last_login', 'bid','slug','date_joined')
+        exclude=('username','picture','last_login', 'bid','slug','date_joined')
         
     def clean_username(self):
         username=self.cleaned_data['username']
