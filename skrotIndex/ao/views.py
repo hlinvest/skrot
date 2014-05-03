@@ -12,19 +12,19 @@ from datetime import datetime
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
-    print datetime.now()
-#    print timezone.localtime(timezone.now())
-    car=Car.objects.filter(end_time__gte =datetime.now()).order_by('start_time')[:2]
+    print datetime.now()   
+    car=Car.objects.filter(end_time__gte =datetime.now()).order_by('start_time')[:2]  
+    print car     
     return render_to_response('index.html',{'car':car}, context_instance=RequestContext(request))
 
 def ao(request, area=None):
 
     if area is None:
-        ao_list=AO.objects.filter( is_active=True)
+        ao_list=AO.objects.filter( is_active=True).order_by('-last_login')
         paginator = Paginator(ao_list, 9)
     else:
         ar=Area.objects.get(area=area)
-        ao_list=AO.objects.filter( area=ar, is_active=True)
+        ao_list=AO.objects.filter( area=ar, is_active=True).order_by('-last_login')
         paginator = Paginator(ao_list, 9) 
     page = request.GET.get('page')
     try:
@@ -144,22 +144,27 @@ def editPic(request):
         if request.method=='POST':
             form=Picture(request.POST,request.FILES)
             if form.is_valid():
-                if 'change' in request.POST:
-                    print " we are in change picture now"
-                    if not ao.picture:                 # if not return true  with empty string and value 0, if ..is not none check null value.  
-                        ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
-                    else: 
-                        ao.picture.delete()
-                        ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
-                    return render_to_response('editpic.html', {'form':form,'ao':ao,'text':'dit nyt profil billede er ændret/tilføj'}, context_instance=RequestContext(request))
-                    
-                elif 'delete' in request.POST:
-                    if not ao.picture:
-                        print "do nothing"
-                    else:
-                        print " we are in delete pciture now"
-                        ao.picture.delete()
-                    return render_to_response('editpic.html', {'form':form,'ao':ao, 'text':'dit profil billede er slettet'}, context_instance=RequestContext(request))
+                pic=form.cleaned_data['picture']
+                print pic
+                if pic is not None:
+                    if 'change' in request.POST:
+                        print " we are in change picture now"
+                        if not ao.picture:                 # if not return true  with empty string and value 0, if ..is not none check null value.  
+                            ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
+                        else: 
+                            ao.picture.delete()
+                            ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
+                        return render_to_response('editpic.html', {'form':form,'ao':ao,'text':'dit nyt profil billede er ændret/tilføj'}, context_instance=RequestContext(request))
+                        
+                    elif 'delete' in request.POST:
+                        if not ao.picture:
+                            print "do nothing"
+                        else:
+                            print " we are in delete pciture now"
+                            ao.picture.delete()
+                        return render_to_response('editpic.html', {'form':form,'ao':ao, 'text':'dit profil billede er slettet'}, context_instance=RequestContext(request))
+                else:
+                    return render_to_response('editpic.html', {'form':form,'ao':ao,'text':' du har ikke uplodet et billede'}, context_instance=RequestContext(request))
             else:
                 return render_to_response('editpic.html', {'form':form,'ao':ao}, context_instance=RequestContext(request))
         else:

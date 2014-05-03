@@ -6,6 +6,7 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 
 class SimpleTest(TestCase):
@@ -14,3 +15,9 @@ class SimpleTest(TestCase):
         Tests that 1 + 1 always equals 2.
         """
         self.assertEqual(1 + 1, 2)
+        
+    def test_ao_view_index(self):
+        url = reverse("ao.views.index")
+        resp = self.client.get(url)
+
+        self.assertEqual(resp.status_code, 200)

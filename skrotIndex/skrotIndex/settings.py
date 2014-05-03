@@ -149,6 +149,7 @@ INSTALLED_APPS = (
      'cars',
      'ao',
      'navigation',
+ #    'django_jenkins'
      #"django_cron",
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -185,4 +186,4 @@ LOGGING = {
 
 #from django.contrib.sites.models import Site
 #SITE_DOMAIN= Site.objects.get_current().domain
-SITE_DOMAIN='127.0.0.1:8000/'
+SITE_DOMAIN='127.0.0.1:8000'

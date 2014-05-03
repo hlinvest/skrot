@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*- 
-
-#from django_cron import CronJobBase, Schedule    # add the path to PYTHONPATH after install django_cron with pip , https://pypi.python.org/pypi/django-cron/
+from django.core.management.base import BaseCommand, CommandError
 from ao.models import Bid
 from datetime import datetime
 from cars.models import SoldCar, Car, highest_bid
@@ -13,16 +12,11 @@ from skrotIndex import settings
 
 
 
-#class MyCronJob(CronJobBase):
-class MyCronJob():
-#    RUN_EVERY_MINS = 1 # every minute
-#    RETRY_AFTER_FAILURE_MINS = 5
-#    schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)
-#    code = 'cars.my_cron_job' 
+
+class Command(BaseCommand):
     
     
-    
-    def do(self):
+    def handle(self, *args, **options):
         print " cron works fine"
         car=Car.objects.filter(end_time__lte=datetime.now())[0:1]
         if car is not None:
@@ -76,7 +70,7 @@ class MyCronJob():
          
 
 
-
-if __name__ == '__main__':
-    mc=MyCronJob()
-    mc.do()
+#
+#if __name__ == '__main__':
+#    mc=MyCronJob()
+#    mc.do()
