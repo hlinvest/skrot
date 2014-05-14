@@ -27,7 +27,6 @@ urlpatterns = patterns('ao.views',
     (r'^redigere_profile_billede/$','editPic'),
     (r'^vil_du_slet_profil/$','willDeleteProfile'),
     (r'^slet_profil/$','deleteProfile'),
-    (r'^om-os/$','about_us'),
 )
 urlpatterns+=patterns('cars.views',
             url(r'^skrot/$','skrot'),

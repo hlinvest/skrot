@@ -9,7 +9,7 @@ class RegiForm(ModelForm):
     password=forms.CharField(label=(u'password'), widget=forms.PasswordInput(render_value=False))
     password2=forms.CharField(label=(u'password2'), widget=forms.PasswordInput(render_value=False))
     web=forms.URLField(required=False)
-    accpetTerms=forms.BooleanField( error_messages={'required': 'accepterer brugervilkår og fortrolighedspolitik for at udføre registrering'},
+    accpetTerms=forms.BooleanField( error_messages={'required': 'Accepterer brugervilkår og fortrolighedspolitik for at udføre registrering'},
     label="Terms")
     
     class Meta:
@@ -22,7 +22,7 @@ class RegiForm(ModelForm):
             AO.objects.get(username=username)
         except AO.DoesNotExist:
                 return username      
-        raise forms.ValidationError('brugernavn er optaget.')
+        raise forms.ValidationError('Brugernavn er optaget.')
     
     def clean_email(self):
         email=self.cleaned_data['email']
@@ -31,14 +31,14 @@ class RegiForm(ModelForm):
         except AO.DoesNotExist:
             return email
         except AO.MultipleObjectsReturned:                   # it is for testing stage ,remeber change_profile form haas the same except
-            raise forms.ValidationError("den email er optaget.")
-        raise forms.ValidationError("den email er optaget.")
+            raise forms.ValidationError("Denne email er allerede i brug.")
+        raise forms.ValidationError("Denne email er allerede i brug.")
       
     def clean_password(self):
         password=self.cleaned_data.get('password',None)
         print password
         if len(password)<6:
-            raise forms.ValidationError('password skal minimun være 6 tegn')
+            raise forms.ValidationError('Password skal minimun være på 6 tegn')
         return password
         
     def clean(self):
@@ -47,7 +47,7 @@ class RegiForm(ModelForm):
         
         if password and password and (password2 == password):
             return self.cleaned_data                                                                             # this method has access too all the fields in the class, so it must return all the fields instead of one.        
-        raise forms.ValidationError('to indtastede passsword er ikke ens')
+        raise forms.ValidationError('De to indtastede passsword er ikke ens')
 
 class LoginForm(forms.Form):  
                                                                                           
@@ -74,8 +74,8 @@ class ChangeProfile(ModelForm):
             except AO.DoesNotExist:
                 return email
             except AO.MultipleObjectsReturned:
-                raise forms.ValidationError("den email er optaget.")
-            raise forms.ValidationError("den email er optaget.")
+                raise forms.ValidationError("Denne email er allerede i brug.")
+            raise forms.ValidationError("Denne email er allerede i brug.")
         return email
     
 class Picture(forms.Form):
@@ -85,11 +85,11 @@ class Picture(forms.Form):
             if picture is not None:
                 if imghdr.what(picture):
                     if  picture.size> settings.MAX_PIC_SIZE:
-                        raise forms.ValidationError('Billedet er for stor, max størrelse på billede er  '+str(settings.MAX_PIC_SIZE)+"bit")
+                        raise forms.ValidationError('Billedet er for stort. Max størrelse på billedet er  '+str(settings.MAX_PIC_SIZE)+"bit")
                     else:
                         return picture
                 else:
-                        raise forms.ValidationError(' det er ikke et billede file')
+                        raise forms.ValidationError(' Denne fil er ikke et billede')
             else:
                 return None
     

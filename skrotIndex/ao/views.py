@@ -10,6 +10,9 @@ from django.contrib.auth.decorators import login_required
 from cars.models import Car
 from datetime import datetime
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from cars.forms import InactiveForm
+from skrotIndex import settings
+from django.core.mail.message import EmailMessage
 
 def index(request):
     print datetime.now()   
@@ -44,12 +47,12 @@ def register(request):
             ar=Area.objects.get(area=form.cleaned_data['area'])
             ao=models.AO(username=form.cleaned_data['email'],company=form.cleaned_data['company'], email=form.cleaned_data['email'], description=form.cleaned_data['description'],
                            cvr=form.cleaned_data['cvr'],  street=form.cleaned_data['street'], postcode=form.cleaned_data['postcode'],
-                           city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], web=form.cleaned_data['web'],is_active=True, is_superuser=False)
+                           city=form.cleaned_data['city'], area=form.cleaned_data['area'], tlf=form.cleaned_data['tlf'], web=form.cleaned_data['web'],is_active=False, is_superuser=False)
             ao.set_password( form.cleaned_data['password'])    
                   
             ao.save()
             loginForm=LoginForm()           
-            return render_to_response('login.html',{'form':loginForm,'text':'færdig med at registere, du kan nu logge in'},context_instance=RequestContext(request))
+            return render_to_response('login.html',{'form':loginForm,'text':'Registrering færdig. Du vil hurtigst muligt modtage en email, efter din registrering er blevet godkendt.'},context_instance=RequestContext(request))
         else:
             return render_to_response('register.html', {'form':form, 'text':'Forkert indtastning, prøv igen'}, context_instance=RequestContext(request))
     else:
@@ -70,13 +73,15 @@ def userLogin(request, slug=None):
                 if loginCustomer.is_staff:
                     return render_to_response('login.html', {'form':form,'text':'Administration skal logge ind på en anden side'},context_instance=RequestContext(request))
                 else:
-                    login(request,loginCustomer) 
+                    login(request,loginCustomer)
+                    if not request.POST.get('husk', None):    # none is the defualt return value here
+                        request.session.set_expiry(0)
                     if  slug is not None:
                         return HttpResponseRedirect('/bil/%s/' %slug)
                     else:
                         return HttpResponseRedirect('/profil/')
             else:
-                return render_to_response('login.html', {'form':form,'text':'Burgernavn og password passer ikke'},context_instance=RequestContext(request))
+                return render_to_response('login.html', {'form':form,'text':'Enten brugernavn eller password er ikke korrekt'},context_instance=RequestContext(request))
         else:
             return render_to_response('login.html', {'form':form},context_instance=RequestContext(request))
     else:
@@ -108,7 +113,7 @@ def editProfile(request):
             if form.is_valid():
                 print "in is_valid"
                 saveChange(ao, form)
-                return render_to_response('editprofile.html',{'ao':ao, 'form':form,'text':'dit profil er blevet ændret'}, context_instance=RequestContext(request))            
+                return render_to_response('editprofile.html',{'ao':ao, 'form':form,'text':'Din profil er blevet ændret'}, context_instance=RequestContext(request))            
             else: 
                 print "not valid"    
                 return render_to_response('editprofile.html',{'ao':ao, 'form':form}, context_instance=RequestContext(request))             
@@ -154,7 +159,7 @@ def editPic(request):
                         else: 
                             ao.picture.delete()
                             ao.picture.save(ao.slug+'.jpg',form.cleaned_data['picture'],save=True)
-                        return render_to_response('editpic.html', {'form':form,'ao':ao,'text':'dit nyt profil billede er ændret/tilføj'}, context_instance=RequestContext(request))
+                        return render_to_response('editpic.html', {'form':form,'ao':ao,'text':'Dit profil billede er ændret'}, context_instance=RequestContext(request))
                         
                     elif 'delete' in request.POST:
                         if not ao.picture:
@@ -162,9 +167,9 @@ def editPic(request):
                         else:
                             print " we are in delete pciture now"
                             ao.picture.delete()
-                        return render_to_response('editpic.html', {'form':form,'ao':ao, 'text':'dit profil billede er slettet'}, context_instance=RequestContext(request))
+                        return render_to_response('editpic.html', {'form':form,'ao':ao, 'text':'Dit profil billede er slettet'}, context_instance=RequestContext(request))
                 else:
-                    return render_to_response('editpic.html', {'form':form,'ao':ao,'text':' du har ikke uplodet et billede'}, context_instance=RequestContext(request))
+                    return render_to_response('editpic.html', {'form':form,'ao':ao,'text':' Du har endnu ikke uploadet et billede'}, context_instance=RequestContext(request))
             else:
                 return render_to_response('editpic.html', {'form':form,'ao':ao}, context_instance=RequestContext(request))
         else:
@@ -173,16 +178,27 @@ def editPic(request):
         
 @login_required
 def willDeleteProfile(request):
-    return render_to_response('delete_profile_q.html', {'id':request.user.id}, context_instance=RequestContext(request))
+    if request.method=='POST':
+        form=InactiveForm(request.POST)
+        if form.is_valid():
+            id=request.user.id
+            message="Bruger med ID "+str(id)+",vil inaktivere sin profil "
+            mail= EmailMessage("Inaktiverer profit",message, to=[settings.DEFAULT_FROM_EMAIL])
+            mail.send()
+            return render_to_response('delete_profile_q.html', {'form':form, 'text':"Din anmodning er sendt, vi vil inaktivere din profil hurtigst mugligt!"}, context_instance=RequestContext(request))
+        else:
+            return render_to_response('delete_profile_q.html', {'form':form, 'text':"Udfyld form"}, context_instance=RequestContext(request))
+    else:
+        form=InactiveForm() 
+    return render_to_response('delete_profile_q.html', {'id':request.user.id, 'form':form}, context_instance=RequestContext(request))
 
 @login_required
 def deleteProfile(request):
-    ao=AO.objects.get(pk=request.user.id)
-    ao.picture.delete()
-    ao.delete()
-    logout(request)
-    return HttpResponseRedirect("/")
-def about_us(request):
-    return render_to_response('aboutus.html')
+        ao=AO.objects.get(pk=request.user.id)
+        ao.picture.delete()
+        ao.delete()
+        logout(request)
+        return HttpResponseRedirect("/")
+
 
     

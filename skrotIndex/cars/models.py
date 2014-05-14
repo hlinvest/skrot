@@ -1,11 +1,14 @@
 from django.db import models
 from django.utils.text import slugify
+import datetime
 
 class Car(models.Model):
         id = models.AutoField(primary_key=True)
         slug=models.SlugField(unique=True)
-        plate=models.CharField(unique=True,max_length=20)
-        year=models.IntegerField()
+        plate=models.CharField(max_length=20, null=True)
+        stelNum=models.CharField(max_length=20)
+        art=models.CharField(max_length=20)
+        year=models.CharField(max_length=20)
         brand=models.CharField(max_length=40)
         address=models.CharField(max_length=40, null=True)
         city=models.CharField(max_length=40)
@@ -21,7 +24,7 @@ class Car(models.Model):
             ordering=['end_time']
         
         def save(self,*args,**kwargs):
-            self.slug=slugify(self.brand+"-"+self.plate)                                                           #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
+            self.slug=slugify(self.brand+"-"+self.stelNum)                                                           #method slugify() Converts to lowercase, removes non-word characters (alphanumerics and underscores) and converts spaces to hyphens. Also strips leading and trailing whitespace.
             super(Car,self).save(*args, **kwargs) 
             
         def delete(self, *args, **kwargs):
@@ -45,7 +48,8 @@ class BidArea(models.Model):
 class SoldCar(models.Model):
         id=models.IntegerField(primary_key=True)
         plate=models.CharField(max_length=20,null=True)
-        year=models.IntegerField()
+        stelNum=models.CharField(max_length=20)
+        year=models.CharField(max_length=20)
         brand=models.CharField(max_length=40)
         address=models.CharField(max_length=40, null=True)
         city=models.CharField(max_length=40)

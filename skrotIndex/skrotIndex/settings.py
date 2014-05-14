@@ -8,18 +8,26 @@ SITE_ROOT = PROJECT_ROOT
 
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Hua Lin', 'morrgray@hotmail.com'),
 )
 
 MANAGERS = ADMINS
 
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.webfaction.com'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'skrotindex'
+#EMAIL_HOST_PASSWORD = '20000000'
+#DEFAULT_FROM_EMAIL = 'info@skrotindex.dk'
+#SERVER_EMAIL = 'info@skrotindex.dk'
+
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'skrotindex'
-EMAIL_HOST_PASSWORD = '20000000'
-DEFAULT_FROM_EMAIL = 'info@skrotindex.dk'
-SERVER_EMAIL = 'info@skrotindex.dk'
+EMAIL_HOST_USER = 'faahjaelp@gmail.com'
+EMAIL_HOST_PASSWORD = 'djangoserver'
+DEFAULT_FROM_EMAIL = 'faahjaelp@gmail.com'
+SERVER_EMAIL='faahjaelp@hotmail.com'
 
 
 DATABASES = {

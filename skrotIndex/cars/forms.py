@@ -6,36 +6,35 @@ import imghdr
 from skrotIndex import settings
 from ao.models import Bid
 from django.db.models.aggregates import Max
-from django.http import request
 date_choice= [(i,i) for i in range(1,7)]
 
 class CarForm(ModelForm):
     duration=forms.ChoiceField(choices=date_choice)
     picture=forms.FileField(required=False)
-    accpetTerms=forms.BooleanField( error_messages={'required': 'accepterer brugervilkår og fortrolighedspolitik for at udføre registrering'},
+    accpetTerms=forms.BooleanField( error_messages={'required': 'Accepter brugervilkår og fortrolighedspolitik for at udføre registrering'},
     label="Terms")
     
     class Meta:
         model=Car
         exclude=('slug','start_time','end_time')
-    def clean_plate(self):
-        plate=self.cleaned_data['plate']
+    def clean_steNum(self):
+        stel=self.cleaned_data['stelNum']
         try:
-            Car.objects.get(plate=plate)
+            Car.objects.get(stelNum=stel)
         except Car.DoesNotExist:
-            return plate
-        raise forms.ValidationError('der er allerede en bil som regiteret med den nummerplade.')
+            return stel
+        raise forms.ValidationError('Der er allerede en bil regiteret med dette stelnummer.')
         
     def clean_picture(self):
         picture=self.cleaned_data['picture']
         if picture is not None:
             if imghdr.what(picture):
                 if  picture.size> settings.MAX_PIC_SIZE:
-                    raise forms.ValidationError('Billedet er for stor, max størrelse på billede er  '+str(settings.MAX_PIC_SIZE)+"bit")
+                    raise forms.ValidationError('Billedet er for stort. Max størrelse på billedet er  '+str(settings.MAX_PIC_SIZE)+"bit")
                 else:
                     return picture
             else:
-                    raise forms.ValidationError(' det er ikke et billede file')
+                    raise forms.ValidationError('Denne fil er ikke et billede')
         else:
             return None
         
@@ -49,7 +48,7 @@ class BidForm(forms.Form):
         if p is not None:
             max_price=int(p)+50
             if price<max_price:
-                raise forms.ValidationError('der er allerede en der byder højere end dig, eller du skal byde minimum 50 kroner højere end hjøst byd.')
+                raise forms.ValidationError(' Du skal byde minimum 50 kroner højere end det højeste bud.')
             else:
                 return price
         else:
@@ -60,22 +59,11 @@ class ContactForm(forms.Form):
     email = forms.EmailField(max_length=200)                                 
     body = forms.CharField(max_length= 1000,widget=forms.Textarea)
     
-                                       
-#class BidForm(ModelForm):
-#    car=forms.CharField()
-#    class Meta:
-#        model=Bid
-#        exclude=('ao')
-#    def cleaned_car(self):
-#        return self.cleaned_data['car']
-#    def cleaned_price(self):
-#        price= self.cleaned_data['price']
-#        carID= self.cleaned_data['car']
-#        max_price=Bid.objects.filter(car=carID).aggregate(Max('price'))
-#        if price< max_price:
-#            raise forms.ValidationError('der er allerede en der byder højere end dig')
-#        else:
-#            return price
+
+class InactiveForm(forms.Form):
+    name = forms.CharField(max_length=100)                              
+    body = forms.CharField(max_length= 1000,widget=forms.Textarea)                                     
+
             
         
     
