@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% block meta %}
+    <title>Find autoophuggere i hele Danmark og scor den højeste skrotpræmie for din bil </title>
+    <meta name="description" content="Oversigt over skrotforhandlere i Danmark. Oversigten er geografisk opdelt, så du nemt og hurtigt kan finde skrotforhandlere i netop dit nærområde">
+{% endblock %}
+{% block carousel %}
+<div class="replacement"></div>
+{% endblock %}
+{% block content %}
+	{% block area %}
+		{% load menu_tags %}
+		<ul class="nav nav-pills nav-stacked col-md-2">
+		<li><a href="/auto_ophugger/"> Hele Danmark </a></li>
+		{% for a in all_areas %}
+			<li><a href= "/auto_ophugger/{{a.area}}/">{{a.area}} </a></li>
+		{% endfor %}
+		
+		</ul>
+	{% endblock %}
+	{% block rightBody %}
+	{% load staticfiles %}
+	<h1>Autoophugger i  {% if area %} {{area}} {%else%} Danmark {% endif %}</h1>
+	<br>
+	<div class="col-md-8">
+	{% for a in ao %}
+    	<div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                          <div class="imageThumbnail">
+                          {% if not c.picture %}
+                          	<img src="{% static 'intetfoto.jpg' %}" alt="{{a.company}}"/></td>
+						    {% else %}
+						   		<img src="{{MEDIA_URL}}{{a.picture}}" alt="{{a.company}}"/></td>
+						    {% endif %}  
+                          </div>
+                        <div class="caption">
+                        <h4>{{a.company}}</h4>
+                        <p>{{a.street}}</p>
+                        <p>{{a.city}}</p>
+                        <p><a href="/ophugger/{{a.slug}}/" class="btn btn-primary pull-right" role="button">Se mere</a></p>
+                    </div>
+                    </div>
+          </div>
+      {% endfor %}
+     </div>
+      
+      <div class=" col-md-offset-2 col-md-8"> 
+          	<ul class="pagination ">
+						    {% block pagination %}
+						        {% if ao.has_previous %}
+						           <li><a href="?page={{ ao.previous_page_number }}"><span>&laquo;</span></a></li> 
+						        {% endif %}
+						        
+							    {% for num in ao.paginator.page_range %}
+							      {% ifequal num ao.number %}
+							        <li class="active"><a href="#">{{ num }}<span class="sr-only">(current)</span></a></li>
+							      {% else %}
+							        <li><a href="?page={{ num }}">{{ num }}</a></li>
+							      {% endifequal %}
+							    {% endfor %}
+						
+						        {% if ao.has_next %}
+						            <li><a href="?page={{ ao.next_page_number }}"> »</a>
+						        {% endif %}
+						     {% endblock %}
+						   
+			</ul>
+	</div>
+	{% endblock %}
+	
+{% endblock %}

@@ -1,0 +1,249 @@
+{% extends "login.html" %}
+{% block meta %}
+    <title>Log ind som autoophuger for at byde på biler</title>
+    <meta name="description" content="">
+{% endblock %}
+{% block content %}
+<div class="modal fade" id="brugervilkår">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Brugervilkår og fortrolighedspolitik</h4>
+      </div>
+      <div class="modal-body">
+        <p>Aktuelle betingelser – Skrotindex.dk
+
+<p><strong>Brugervilkår</strong></p>
+
+<P>Ved brug af Skrotindex.dk, accepterer du disse brugervilkår og du opfordres hermed til at læse brugervilkårene og gemme eller udskrive dem.</p>
+
+<p><strong>Om Skrotindex.dk</strong></p>
+
+<p>Skrotindex.dk er en webbaseret tjeneste, der retter sig mod bilejere og autoophuggere, hvor bilejere kan bruge Skrotindex.dk som platform til at indhente tilbud på skrotpræmier, og informationer om autoophuggere.</p>
+
+<p>Autoophuggere kan anvende hjemmesiden til at afgive tilbud på bilejernes forespørgsler, samt reklamere for deres virksomhed ved at oprette en profil på hjemmesiden.</p>
+
+<p>Skrotindex.dk kan overordnet opdeles i to hovedområder:</p>
+
+<p>1. Bilejerne kan angive deres stamdata, og opretter også en kørertøjsprofil, hvor de angiver deres køretøjs informationer, herunder model, mærke, brugsdata og registreringsnummer. Som bilejer kan man uploade billeder af ens bil, så autoophuggere får mulighed for at se bilens tilstand, før de afgiver tilbud på bilen.</p>
+
+<p>2. Autoophuggere kan her oprette en virksomhedsprofil over deres værksted og uploade oplysninger om deres virksomhed. Bilejere vil kunne browse registrerede autoophuggere igennem, læse eller skriveanmeldelser af værksteder efter egne erfaringer, samt vurdere ophuggernes service og troværdighed.</p>
+
+<p><strong>Bilejere</strong></p>
+
+<P>Som bilejer skal du ikke oprette en profil for at bruge tjenesten. For at kunne bruge Skrotindex.dk skal du blot afgive nogle obligatoriske stamoplysninger, herunder dit navn, postadresse, telefonnummer, e-mail adresse samt oplysninger om din bil. Man må ikke anvende tjenesten til at indhente priser, der ikke er reelle opgaver.</P>
+
+<p>Forespørgsler må alene ske på biler, hvor brugeren er ejer eller har ejerens udtrykkelige accept til oprettelsen af forespørgslen. Den oprettede opgave kan ses af autoophuggere, mens kontaktoplysninger alene kan ses af Skrotindex.dk. Kontaktoplysningerne bruger vi til at sende dig de 3 bedste tilbud.</p>
+
+<p><strong>Ansvar for eget indhold</strong></p>
+
+<p>På Skrotindex.dk har du mulighed for at uploade dit eget materiale i form af oplysninger om bilen, billeder m.v., og dette indehold har autoophuggere adgang til.</p>
+
+<p>Uploader du materiale på tjenesten, skal du sikre dig, at du ikke krænker andres rettigheder. Du må derfor som udgangspunkt alene uploade materiale, du selv har lavet.</p>
+
+<p>Uploader du materiale, andre har lavet, skal du sikre dig, at du ejer de nødvendige rettigheder til det materiale, du uploader, eller har konkret samtykke fra rettighedshaveren til at uploade materialet.</p>
+
+<p>Du har selv rådigheden over dine egne oplysninger og det indhold, du selv vælger at uploade og dele med andre. Derfor er du også ansvarlig for det materiale, du uploader og vælger at dele med andre.</p>
+
+<p>Skrotindex.dk påtager sig intet ansvar for dit materiale og foretager ingen form for clearing af rettigheder.</p>
+
+<p>Du indestår selv for at lovligheden af materialet du uploader og deler med andre. Herunder indestår du for, at din brug af materialet ikke krænker andre rettigheder fx ophavsrettigheder, varemærkerettigheder eller persondata. Skulle Skrotindex.dk blive mødt med et erstatningskrav fra tredjemand, fordi du ved upload og deling af materialet har krænket andres rettigheder, hæfter du ovenfor Skrotindex.dk for sådanne erstatningskrav og de omkostninger, dette måtte medføre for Skrotidex.dk, og du risikerer derfor at blive mødt med såvel erstatningskrav fra rettighedshaveren, såvel som Skrotindex.dk</p>
+
+<p><strong>Retningslinjer for brug af Skrotindex.dk</strong></p>
+
+<p>Du er berettiget til at bruge den funktionalitet, der til en hver tid måtte være tilgængelig på tjenesten. Skrotindex.dk forbeholder sig ret til løbende at ændre funktionaliteten på tjenesten. Skrotindex.dk-tjenesten er primært til brug for brugeres forespørgsel på skrotpræmier, og autoophuggernes tilbud herpå. Det er ikke tilladt for brugerne at anvende tjenesten til marketing af kommerciel/erhvervsmæssig aktivitet, herunder marketing af egne eller andres kommercielle produkter og ydelser.</p>
+
+<P>Krænker det materiale, du uploader andres rettigheder fx andres ophavs- eller varemærkerettigheder, eller udgør materialet en krænkelse af anden lovgivning, fx persondataloven, markedsføringsloven, straffeloven m.fl., forbeholder Skrotindex.dk sig retten til at fjerne/slette sådant materiale efter Skrotindex.dk’s eget skøn og uden forudgående advarsel.</P>
+
+<p>Oplysninger til dig på Skrotindex.dk</p>
+
+<P>Du accepterer, at Skrotindex.dk og autoophuggere på tjenesten kan sende dig meddelelser via det på tjenesten fungerende beskedsystem, samt din angivne e-mail adresse, ligesom der på tjenesten kan forekomme annoncer og marketingsmateriale fra Skrotindex.dk og tjenestens samarbejdspartnere.</P>
+
+<p>Den, af dig, oplyste egen e-mail adresse kan alene ses af autoophuggeren, når du som bruger har accepteret et tilbud fra en autoophugger på Skrotindex.dk. Her vil e-mail adressen kunne bruges i forbindelse med aftaleindgåelse af skrotpræmien.</p>
+
+<p>Skrotindex.dk bruger ikke din e-mail adresse eller andre kontaktoplysninger til at sende nyhedsbreve med markedsføringsmateriale m.v., med mindre du har givet samtykke hertil.</p>
+
+<p>Skrotindex.dk forbeholder sig dog ret til at anvende dine e-mail adresse og andre kontaktoplysninger til at sende dig besked om, at der er modtaget tilbud fra en autoophugger, vigtig information om tjenesten, fx oplysninger om sikkerhedsmæssige forhold, væsentlige ændringer af disse vilkår, driftsoplysninger, nye eller ændrede funktioner i tjenesten.</p>
+
+<p><strong>Anvendelse af dine oplysninger og dit materiale</strong></p>
+
+<p>Dine stamoplysninger, herunder din e-mail adresse og det materiale du måtte uploade, vil af Skrotindex.dk ikke blive overdraget til andre, eller af Skrotindex.dk brugt til andre formål, end hvad der fremgår af disse vilkår. Ved brug af tjenesten og ved upload af materiale accepterer du, at disse oplysninger og dit materiale gøres tilgængeligt for autoophuggere.<p>
+
+<strong>Persondata</strong>
+
+<p>Når du bruger Skrotindex.dk, indsamler og gemmer Skrotindex.dk de enkelte stamdata, hvilket er nødvendig for at kunne administrere din brug af hjemmesiden</p>
+
+<p>Skrotindex.dk videregiver ikke dine stamoplysninger og øvrige oplysninger, der registreres om dig og din færden på tjenesten eller, det materiale du uploader på hjemmesiden, medmindre du giver Skrotindex.dk retten til videregivelse af dine oplysninger. Pålægges Skrotindex.dk at udlevere oplysninger om dig af politiet eller domstolen, vil Skrotindex.dk dog udlevere de krævede oplysninger.</p>
+
+<p>Før du kan bruge Skrotindex.dk har vi brug for følgende oplysninger: Navn, adresse, telefonnummer og e-mail adresse. Vi foretager registreringen af dine personoplysninger med det formål, at kunne komme i kontakt med dig, når der bliver budt på din bil.</p>
+
+<p>Ejerne af Skrotindex.dk har adgang til de oplysninger, der registreres om dig. Vi gemmer ikke kundeoplysning krypteret, ligeledes transmitter vi ikke kundeoplysninger krypteret.</p>
+
+<p>Vi bruger en logstatistik på Skrotindex.dk, hvilket betyder, at et statistiksystem indsamler information som kan give et statistik billede af, hvor mange besøgende vi har, hvor de kommer fra og hvor på websitet det forlades mv. Logstatistikken bruges kun med det formål at optimere Skrotindex.dk.</p>
+
+<strong>Ansvarsbegrænsning</strong>
+
+<p>Skrotindex.dk tilstræber, at hjemmesiden altid er tilgængelig. Der kan dog forekomme omstændigheder, hvor hjemmesiden ikke er tilgængelig, hvilket kan skyldes sikkerhedsmæssige eller vedligeholdelsesmæssige årsager, netværksproblemer, svigt i kommunikationsforbindelse og hardware, og Skrotindex.dk vil så vidt muligt forsøge at varsle sådanne omstændigheder på
+
+hjemmesiden, navnligt hvor hjemmesiden vil være utilgængelig eller delvis utilgængelig i længere tid.</p>
+
+<p>Skrotindex.dk fraskriver sig ansvaret for ethvert tab – direkte eller indirekte som måtte blive påført ved anvendelse af hjemmesiden eller ved fejl og mangler på siden.</p>
+
+<p>Skrotindex.dk er alene formidler af informationer på hjemmesiden, herunder vedrørende indhentelse og afgivelse af tilbud bruger og autoophuggere imellem. Skrotindex.dk frasiger sig ethvert ansvar, herunder erstatningsansvar for sådan formidling, herunder for indhold og efterlevelse af sådan informationer, korrespondance og tilbud. Skrotindex.dk er således ikke involveret i selve transaktioner, hvor en bruger får udbetalt skrotpræmien i henhold til et givent tilbud, og Skrotindex.dk fraskriver sig således ligeledes ethvert ansvar for uenigheder der måtte forekomme mellem brugeren og autoophugger.</p>
+
+<strong>Ændring af disse vilkår</strong>
+
+<p>Skrotindex.dk forbeholder sig ret til på ethvert tidspunkt at ændre disse vilkår. Ved væsentlige ændringer vil Skrotindex.dk give besked om ikrafttrædelsen af de ændrede vilkår med minimum 30 dages varsel. Ændringer bekendtgøres på hjemmesiden og/eller sendes som besked direkte til dig.</p>
+
+<p>De til enhver tid gældende vilkår vil være tilgængelig på hjemmesiden.</p>
+
+<strong>Kontaktoplysninger</strong>
+
+<P>Skrotindex.dk drives af: hlinvest </p>
+
+<P>CVR-nr.: 32216226</p>
+
+<p>Adresse: 2400 København NV</p>
+
+<p>E-mail: info@skrotindex.dk</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Luk</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	{% load menu_tags %}
+	<h1>{{text}}</h1>
+	<br>
+
+	<form method="post">
+	{% csrf_token %} 
+	<div class="form-group input-group col-md-12  ">
+        <div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.company|addcss:"form-control,Virksomhed:,"}}
+        </div>
+       	{% if form.company.errors %}  
+	    	<div class=" col-md-4 alert-warning ">{{form.company.errors}}</div>
+        {%endif%}
+     </div>
+        
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.cvr|addcss:"form-control,CVR:,"}}
+       	</div>
+       	{% if form.cvr.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.cvr.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.email|addcss:"form-control,Email:,"}}
+       	</div>
+       	{% if form.email.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.email.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+      <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.password|addcss:"form-control,Pasword:,"}}
+       	</div>
+       	{% if form.password.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.password.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.password2|addcss:"form-control,Gentag password:,"}}
+       	</div>
+       	{% if form.password2.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.password2.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.tlf|addcss:"form-control,Telefon:,"}}
+       	</div>
+       	{% if form.tlf.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.tlf.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.street|addcss:"form-control,Addresse:,"}}
+       	</div>
+       	{% if form.street.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.street.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+      <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.postcode|addcss:"form-control,Post nummer:,"}}
+       	</div>
+       	{% if form.postcode.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.postcode.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.city|addcss:"form-control,By:,"}}
+       	</div>
+       	{% if form.city.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.city.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+      <div class="form-group input-group col-md-12  "> 
+      	<div class="col-md-offset-2 col-md-2">
+      	<h4> Vælg område i Danmark: </h4>
+     	</div>  
+       	<div class="col-md-4 input-group-lg">
+        	{{form.area|addcss:"form-control,Område:,"}}
+       	</div>
+       	{% if form.area.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.area.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">   
+       	<div class="col-md-6 col-md-offset-2 input-group-lg">
+        	{{form.web|addcss:"form-control,Web:,"}}
+       	</div>
+       	{% if form.web.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.web.errors}}</div>
+       	{%endif%}        
+     </div>
+     
+     <div class="form-group input-group col-md-12  ">    	    
+     	<div class="col-md-offset-2 col-md-6 ">
+        	{{form.description|addcss:"form-control, Skriv lidt om dit værksted(max 2000 ord):,4"}}
+       	</div>
+       	{% if form.description.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.description.errors}}</div>
+       	{%endif%}        
+     </div>
+    <div class="col-md-offset-2 col-md-6 ">
+     <p> {{form.accpetTerms}} Jeg accepterer SkrotIndex.dk <a href="#brugervilkår" data-toggle="modal"> brugervilkår og fortrolighedspolitik</a></p>
+     </div>
+     {% if form.accpetTerms.errors %}  
+	     	<div class=" col-md-4 alert-warning ">{{form.accpetTerms.errors}}</div>
+      {%endif%} 
+     <div class="form-group col-md-offset-4 col-md-4">
+          <button type="submit" class="btn btn-info btn-block btn-lg" >Registrer</button>
+      </div>
+     
+	
+     </form>
+         
+
+{% endblock %}
+		
+	

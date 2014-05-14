@@ -1,0 +1,60 @@
+{% extends 'ophugger.html' %}
+{% block title%}
+afsluttende auktion
+{% endblock%}
+  {% block headmenu %}
+               	<li><a href="/"><span></span>Forside</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li><a href="/auto_ophugger/" ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
+					{%else%} 
+					 <li><a href='#' ><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
+					{% endif %}
+       {% endblock %}
+{% block content%}
+  <h1>Den aktion er afsluttende</h1>
+<div class="bil info" align="left">
+<table >
+	<tr><td>Nummerplad</td> <td>{{car.plate}}</td></tr>
+	<tr><td>Mærk</td><td>{{car.brand}}</td></tr>
+	<tr><td>Årgang</td> <td>{{car.year}}</td></tr>
+	<tr><td>Adresse</td> <td>{{car.address}}</td></tr>
+	<tr><td>By</td> <td>{{car.city}}</td></tr>
+	<tr><td>Ønsket af pickup</td> <td>{% if car.pickup %}Ja tak{% else %} Nej {% endif %}</td></tr>
+
+
+</table>     
+</div>
+{% if not car.picture %}
+{% else %} 
+<div class="billede" align="right">
+<td><img src="{{MEDIA_URL}}{{car.picture}}" width="200" height="150"></td></div>
+{% endif %} 
+<p>Den aktion started {{car.start_time }} slutter {{car.end_time}} </p>
+<table>
+		<tr><th>Auto ophugger</th>  <th>Pris</th></tr>
+	{% if not bid %}
+	{% else %}
+		{% for b in bid %}
+			<tr><td>{{b.bider.company}}</td>  <td>{{b.price}}</td></tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+{% endblock %}
+

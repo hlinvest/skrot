@@ -1,0 +1,28 @@
+{% extends "ophugger.html"%}
+{% block meta %}
+ <title>Log ind som autophugger</title>
+ <meta name="description" content="">
+  <link href="signin.css" rel="stylesheet">
+{% endblock %}
+{%block content %}
+
+<h4 class="text-center text-danger">{{text}}</h4>
+{% load menu_tags %}
+
+<form class="form-signin" role="form" method="post">
+{% csrf_token%}
+
+        <h2 class="form-signin-heading">Login</h2>
+        {{form.username|addcss:"form-control,Email:,"}}  {% if form.username.errors%}<h5 class="text-warning"> {{form.username.errors}}</h5> {% endif%}
+        <br>
+        {{form.password|addcss:"form-control,Password:,"}}   {% if form.password.errors%}<h5 class="text-warning"> {{form.password.errors}}</h5> {% endif%}
+        
+        <label class="checkbox">
+          <input type="checkbox" name="husk"> Husk mig
+        </label>
+        <h5>Glemt dit kodeord? <a href="/resetpassword/"><span style="color: red;">Tryk her</span></a></h5>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+</form>
+
+
+{% endblock %}

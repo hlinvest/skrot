@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}
+    <title>Skrot din bil til det højeste pris</title>
+    <meta name="description" content="Skrot din bil. Indhent den højeste skrotpræmie. Autoophuggere bydder over hele landet. Mulighed for få den højeste skrotpris på markedet">
+    {% endblock %}
+    <meta name="author" content="">
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'lille-logo.png' %}">
+    <link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'carousel.css' %}" rel="stylesheet">
+     <link href="{% static 'docs.min.css' %}" rel="stylesheet">
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                <a class="navbar-brand" href="/"><div class="text-success">SkrotIndex</div></a>
+            </div>
+            {% load menu_tags %}
+            <div class="navbar-collapse collapse" id="menubar">
+              <ul class="nav navbar-nav">
+                <li  class="{% active request '^/$' %}"> <a href="/">Forside</a></li>
+                <li class="{% active request '^/skrot/$' %}"><a href="/skrot/">Skrot din bil</a></li>
+                <li class="{% active request '^/auto_ophugger/$' %} {% active request '^/auto_ophugger/' %}  {% active request '^/ophugger/' %} "><a  href="/auto_ophugger/">Autoophuggere</a></li>
+                <li ><a href="/#omos">Om os</a></li>
+                <li class="{% active request '^/kontakt/$' %}"><a href="/kontakt/">Kontakt os</a></li>
+             </ul>
+   
+             <ul class="nav navbar-nav pull-right">  
+                <li class="dropdown {% active request '^/profil/$'%} {% active request '^/biler/$'%} {% active request '^/vil_du_slet_profil/$'%} {% active request '^/logud/$' %} {% active request '^/login/$'%} {% active request '^/biler/$' %} {% active request '^/registrer/$' %}">
+            {% if user.is_authenticated %}
+            	<a href="/profil/" class="dropdown-toggle" data-toggle="dropdown">Profil <b class="caret"></b></a>
+		        <ul class="dropdown-menu">
+		        		<li><a href="/profil/"><span></span>Profil </a></li>
+		                  <li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				          <li><a href="/logud/"><span></span> Log ud</a> </li>
+				          <li><a href="/vil_du_slet_profil/"> <span></span>Slet eller inaktivér profil</a></li>
+			     </ul>
+		                    
+            {% else %} 
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Autoophuggere <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href='/login/'>Login</a></li>
+                    <li><a href="/biler/">Byd på biler</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Hvis du er ikke registret</li>
+                    <li><a href="/registrer/">Registrer</a></li>
+                    
+                  </ul>
+            {% endif %}
+                </li>
+             </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+ {% block carousel %}   
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text: " alt="model">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+              <img src="{% static 'Model.png' %}" alt="skrotindex model" width="850px" height="380px">
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:Seneste biler" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Seneste biler</h1>
+              {% for c in car %}
+                    <p><a href="{{site}}/bil/{{c.id}}">{{ c.brand}}</a> fra {{c.year}}, i {{c.address}}, ønkser afhentning: {% if c.pickup %} Ja {%else%} Nej {% endif %}</p>
+              {% endfor %}
+              <p><a class="btn btn-lg btn-primary" href="{{site}}/biler" role="button">Se alle bilerne</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:Find en autoophugger" alt="Find en autoophugger">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Find en autoophugger</h1>
+              <p>Vi hjælper dig med at finde en skrotforhandler nær dig – se den samlede oversigt over autoophuggere i dit nærområde.</p>
+              <p><a class="btn btn-lg btn-primary" href="/auto_ophugger/" role="button">Autoophuggere</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div><!-- /.carousel -->
+{% endblock %}
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+    {% block content %}
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+           <a href="/skrot/"><img src="{% static 'skrot.png' %}" class="img-circle"   alt="scor højste skrotprimær"></a>
+          <h2> <a href="/skrot/">Skrot din bil</a></h2>
+          <p>Indhent 3 gratis og uforpligtende tilbud fra din nærmeste autoophugger </p>
+          <p><a class="btn btn-default" href="/skrot/" role="button">Skrot nu &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+           <a href="/auto_ophugger/"><img  src="{% static 'compass.jpg' %}" class="img-circle"  alt="autoophuggere i Danmark"></a>
+          <h2><a href="/auto_ophugger/">Find en autoophugger</a></h2>
+          <p>Find en skrotforhandler nær dig – se den samlede oversigt over autoophuggere i dit nærområde.</p>
+          <p><a class="btn btn-default" href="/auto_ophugger/" role="button">Find autoophuggere &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <a href="/biler/"><img class="img-circle'" src="{% static 'logo3.png' %}" alt="alle skrotte bilerne"></a>
+          <a href="/biler/"><h2>For autoophuggere</h2></a>
+          <p>Som autoophugger kan du her afgive dit bud på en skrotbil.</p>
+          <p><a class="btn btn-default" href="/biler/" role="button">See alle bilerne &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+
+      <!-- START THE FEATURETTES -->
+   <div id="omos">
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2><strong class="text-success">Om SkrotIndex.dk</strong> <span class="text-muted"></span></h2>
+          <p class="lead">SkrotIndex.dk skaber gennemsigtighed ved at samle alle skrotforhandlere i Danmark under et site,
+           hvor du som bilejer og sælger sikrer dig at indhente den højeste skrotpris for din bil. SkrotIndex.dk ønsker at rydde op i junglen af autoophuggere, så du i første omgang sparer en masse tid,
+           men vigtigst af alt også gør det bedste handel. Hos SkrotIndex.dk behøver du ikke at henvende dig til samtlige skrotforhandlere for at få den bedste skrotpræmie- alt det klarer vi for dig. Vi har nemlig allerede samlet alle autoophuggere inden for dit lokale område,
+           så du med vores lette værktøj får det bedste tilbud online. </p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="{% static 'ned1.png'%}" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="{% static 'ned2.png'%}" alt="Generic placeholder image">
+        </div>
+        <div class="col-md-7">
+     	<br>
+        <br>
+        <br>
+        <br>
+          <h2>  <strong class="text-success">Skrot din bil</strong> </h2>
+          <p class="lead">Vi hjælper dig med at skrotte din bil. Hos SkrotIndex.dk kan du indhente den højeste skrotpræmie. 
+			Det eneste du skal gøre er blot at angive stamdata på din skrotbil, så byder autoophuggere over hele landet på netop din bil.
+			Du får dermed mulighed for få den højeste pris på markedet.
+	</p>
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2><strong class="text-success">For autoophugger</strong> </h2>
+          <p class="lead"> SkrotIndex.dk er Danmarks største autoophuggerportal.
+          Her kan du som autoophugger byde ind på skrotbiler i både dit lokaleområde og i hele landet.  For at kunne afgive tilbud, skal du registrere dit autoophug herpå tjenesten.
+          Når du registrerer dig, skal du vælge et kodeord. Kodeordet giver dig adgang til din profil, hvorfra du afgiver tilbud på massevis af skrotbiler. 
+          </p>
+		 	<p class="lead">Dine fordele ved SkrotIndex.dk: </p>
+			<p class="lead">•	Linker dig op med bilejere fra hele landet. </p>
+			<p class="lead">•	Leverer skrotbiler direkte til din indbakke året rundt</p>
+			<p class="lead">•	Skaber større eksponering for dit autoophug.</p>
+			<p class="lead">•	Udvider din kundekreds </p>
+         
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="{% static 'ned3.png'%}" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+   </div>
+    {% endblock %}
+  </div><!-- /.container -->
+
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2014 SkrotIndex.dk. &middot; <a href="">Privacy</a> &middot; <a href="">Terms</a></p>
+      </footer>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'docs.min.js' %}"></script>
+    {% block extraScript %}
+    {% endblock %}
+  </body>
+</html>

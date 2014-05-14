@@ -1,0 +1,36 @@
+{% extends "ophugger.html" %}
+{% block title %} Vi har samlet alle autoophuggere {% endblock %}
+   {% block headmenu %}
+                	<li><a href="/"><span></span>Forside</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li><a href="/auto_ophugger/"  ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/" class="current"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/" ><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
+					{%else%} 
+					 <li><a href='#'><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
+				{% endif %}                  
+    {% endblock %}
+    {% block content %}
+    <div style="width: 700px;margin-left:auto;margin-right:auto;">
+    <b><span>Skrotindex.dk </span>skaber gennemsigtighed ved at samle alle skrotforhandler i Danmark under et site, 
+    hvor du som bilejer og sælger sikrer dig at indhente den højeste skrotpris for din bil. SkrotIndex.dk ønsker at rydde op i junglen af autoophuggere,
+    så du i første omgang sparer en masse tid men vigtigst af alt også gør det bedste salg. 
+    Hos SkrotIndex.dk behøver du ikke at henvende dig til samtlige skrotforhandlere for at få den bedste skrotpræmie- alt det klarer vi for dig. 
+    Vi har nemlig allerede samlet alle autoophuggere inden for dit lokale område, så du med vores lette værktøj får det bedste tilbud online. </b>
+    </div>
+
+    {% endblock %}

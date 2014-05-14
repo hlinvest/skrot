@@ -1,0 +1,10 @@
+change in setting
+add navigtion app,
+add 'django.core.context_processors.request', to TEMPLATE_CONTEXT_PROCESSORS
+change templates to boostrap css
+customer login with email as username
+add admin folder in template
+
+python manage.py cron to run cron job ( set  "os.environ.setdefault("DJANGO_SETTINGS_MODULE", "skrotIndex.settings"" in manage.py)
+
+add and use south :http://garmoncheg.blogspot.dk/2011/08/django-how-and-why-to-use-migrations.html, drop south, it is very annoying, change db manuelly.

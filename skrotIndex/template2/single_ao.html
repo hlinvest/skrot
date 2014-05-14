@@ -1,0 +1,30 @@
+{% extends "skrot_biler.html" %}
+{% block meta %}
+    <title> Autoophugger {{ao.company}}</title>
+    <meta name="description" content="Skrothandler {{ao.company}} fra {{ao.city}}, ">
+{% endblock %}
+{% block rightBody %}
+{% load staticfiles %}
+<div class=" col-md-5">
+	  <h1 class="text-info">{{ao.company}}</h1>
+	
+	  	<h4>Addresse: {{ao.street}}</h4>
+		<h4>{{ao.postcode}} {{ao.city}}</h4>
+		<h4>Email: {{ao.email}}</h4>
+		<h4>Web: {% if ao.web %} <a href="{{ao.web}}">{{ao.web}} </a>{%else%} {{ao.company}} har ikke en webside endnu.{% endif %}</h4>
+		<h4>Telefon: {{ao.tlf}}</h4>
+		<h4>Om {{ao.company}} :</h4>
+		<h4> {{ao.description}}</h4>
+	</div>
+	<div class="col-md-3 ">
+    	{% if not car.picture %}
+    		<img src="{% static 'intetfoto.jpg' %}" /></td>
+		{% else %} 
+	
+			<a href="{{MEDIA_URL}}{{ao.picture}}">
+			<img src="{{MEDIA_URL}}{{ao.picture}}" width="300" height="250" alt="{{ao.company}},{{ao.street}}, {{ao.tlf}}"/>
+			</a>
+		{% endif %} 
+  	</div>
+
+{% endblock %}

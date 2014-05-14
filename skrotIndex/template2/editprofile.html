@@ -1,0 +1,50 @@
+{% extends "profile.html"%}
+
+{% block title %}
+Rediger {{ao.company}}s profil
+{% endblock %}
+{% block rightBody %}
+<a href="/profil/" ><h4> &laquo; Tilbage til profil</h4></a> 
+<h2>Du kan ændre din profil her</h2>
+{{text}}
+<div class="col-md-8">
+	<form action="" method="post" enctype="multipart/form-data" >
+	{% csrf_token %} 
+	<table class="table">
+		<tr><td><label>Virksomhed:</label></td><td> {{form.company}} </td>
+		<td>{% if form.company.errors %} <span class="small text-warning"> {{form.company.errors}}</span>  {%endif%}</td> </tr>
+		
+		<tr><td><label>CVR:</label></td> <td>{{form.cvr}}</td>
+		<td>{% if form.cvr.errors %}  <span class="small text-warning">{{form.cvr.errors}}</span>  {%endif%} </td></tr>
+		
+		<tr><td><label>Email:</label> </td><td> {{form.email}}</td>
+		<td>{% if form.email.errors %}  <span class="small text-warning">{{form.email.errors}}</span>  {%endif%}</td></tr>		
+		
+		<tr><td><label>Telefon:</label> </td> <td>{{form.tlf}}</td>
+		<td>{% if form.tlf.errors %}  <span class="small text-warning">{{form.tlf.errors}}</span>  {%endif%} </td></tr>	
+		
+		<tr><td><label>Addresse: </label></td> <td>{{form.street}}</td>
+		<td>{% if form.street.errors %}  <span class="small text-warning">{{form.street.errors}}</span>  {%endif%} </td></tr>
+
+				
+		<tr><td><label>Postnummer: </label><td>{{form.postcode}}</td>
+		<td>{% if form.postcode.errors %}  <span class="small text-warning">{{form.postcode.errors}} </span> {%endif%} </td></tr>
+		
+		<tr><td><label>By: </label></td> <td> {{form.city}}</td>
+		<td>{% if form.city.errors %}  <span class="small text-warning">{{form.city.errors}}</span>  {%endif%}</td></tr>
+
+		<tr><td><label>Område: </label></td> <td> {{form.area}}</td>
+		<td>{% if form.area.errors %}  <span class="small text-warning">{{form.area.errors}} </span>  {%endif%}</td></tr>
+		
+		
+		<tr><td><label >Website: </label></td><td> {{form.web}}</td>
+		<td>{% if form.web.errors %}  <span class="small text-warning">{{form.web.errors}} </span>  {%endif%}</td></tr>
+			
+		<tr><td><label >Skriv lidt om værkstedet:</label></td><td>{{form.description}}</td>
+		<td>{% if form.description.errors %}<span class="small text-warning">{{form.description.errors}} </span>  {%endif%}</td></tr>
+			 
+		<tr><td></td><td><input type="submit" alt="Ændre", value="Ændre"></td></tr>
+		</table>
+		</form>
+</div>
+{% endblock %}

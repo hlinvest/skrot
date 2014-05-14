@@ -1,0 +1,51 @@
+{% extends 'ophugger.html' %}
+ 
+ {% block title %}
+ Autoophugger {{ao.company}}
+ {% endblock %}
+  {% block headmenu %}
+              		<li><a href="/"><span></span>Forside</a></li>
+                	<li> <a href='/skrot/' > <span></span>Skrot din bil</a></li>                                
+                    <li><a href="/auto_ophugger/" class="current" ><span></span>Autoophuggere</a></li>
+                    <li><a href="/om-os/"><span></span>Om os</a></li>
+                    <li><a href="/kontakt/" ><span></span>Kontakt os</a></li> 
+                    {% if user.is_authenticated %}                   
+	                    	<li><a href="/profil/"><span></span>Profil &nbsp;&nbsp;</a>
+		                    	<ul class="sub">
+		                    		<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+				                    <li><a href="/logud/"><span></span> Log ud</a> </li>
+				                    <li><a href="/vil_du_slet_profil/"> <span></span>Slet profil</a></li>
+			                    </ul>
+		                    </li>
+					{%else%} 
+					 <li><a href='#' ><span></span>For Autoophuggere</a>
+					 	<ul class="sub">
+							<li><a href='/login/' > <span></span>Login</a> </li>
+							<li><a href='/register/'><span></span> Registrer</a></li>
+							<li> <a href='/biler/' > <span></span>Byd på biler</a></li>
+						</ul>
+					</li>
+					{% endif %}
+                 {% endblock %}
+ {% block content %}
+<div class="userprofile"> 
+<p><h1>{{ao.company}}</h1></p>
+ <p><b>Addresse: </b>{{ao.street}}</p>
+ <p><b>{{ao.postcode}} {{ao.city}}</b></p>
+ <p></p>
+ <p><b>Email: </b>{{ao.email}}</p>
+ <p><b>Web:</b> {% if ao.web %} {{ao.web}} {% endif %}</p>
+ <p><b>Telefon:</b> {{ao.tlf}}</p>
+ <p><b>Om {{ao.company}} :</b></p>
+ <p>{{ao.description}}</p>
+ </div>
+ {% block right %}
+ {% if not ao.picture %}
+ {% else%}
+ <div class="userpicture">
+ <img src="{{MEDIA_URL}}{{ao.picture}}" width="150" height="150">
+ </div>
+ {% endif %}
+ {% endblock %}
+ 
+ {% endblock %}

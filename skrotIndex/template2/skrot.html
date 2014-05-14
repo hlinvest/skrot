@@ -1,0 +1,190 @@
+{% extends "ophugger.html"%}
+{% block meta %}
+    <title>Indsæt bilens oplysninger </title>
+    <meta name="description" content="Angiv bilens oplysninger og giv autoophuggere mulighed for at byde ind med den højeste skrotpræmie.">
+{% endblock %}
+{% block carousel %}
+<div class="replacement"></div>
+{% endblock %}
+{% block content %}
+<div class="modal fade" id="brugervilkår">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Brugervilkår og fortrolighedspolitik</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Luk</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% load menu_tags %}
+<br>
+<h3 class="text-primary col-md-offset-2">Du kan indtaste eller ændre bilens nummplader eller stelnummer</h3>
+	<div class=" col-md-4 alert-warning ">{{errorsText}}</div>
+<form method="post">
+	{% csrf_token %} 
+ 	<div class="form-group input-group col-md-10 col-md-offset-2 ">
+        	<div class="input-group-lg col-md-3">
+            	<input type="text" name="numField" class="form-control"  placeholder="Nummer plade">	
+            </div> 
+            <div class=" input-group-lg  col-md-1 ">
+             <h3 class="text-mute">eller</h3>
+            </div> 
+            <div class=" input-group-lg col-md-3">
+            	<input type="text" name="stelField" class="form-control"  placeholder="StelNummer">	
+            </div>
+       </div>
+	<button type="submit" id="findCarDataBtn" class="btn btn-warning col-md-offset-7 form-group" name="findCarData">Submit</button>
+</form>
+
+<h3 class="text-primary col-md-offset-2">{{text}}</h3>
+  <form action="" method="post" enctype="multipart/form-data" >
+  {% csrf_token %} 
+        <div class="form-group input-group col-md-12  ">
+        	<div class="col-md-6 col-md-offset-2 input-group-lg">
+            	{{form.plate|addcss:"form-control,Nummer Plader:,"}}
+            </div>
+            {% if form.plate.errors %}  
+	             <div class=" col-md-4 alert-warning ">{{form.plate.errors}}</div>
+            {%endif%}
+         </div>
+         
+          <div class="form-group input-group col-md-12  ">
+        	<div class="col-md-6 col-md-offset-2 input-group-lg">
+            	{{form.stelNum|addcss:"form-control,Stelnummer:,"}}
+            </div>
+            {% if form.stelNum.errors %}  
+	             <div class=" col-md-4 alert-warning ">{{form.stelNum.errors}}</div>
+            {%endif%}
+         </div>
+         
+          <div class="form-group input-group col-md-12  ">
+        	<div class="col-md-6 col-md-offset-2 input-group-lg">
+            	{{form.art|addcss:"form-control,Art:,"}}
+            </div>
+            {% if form.art.errors %}  
+	             <div class=" col-md-4 alert-warning ">{{form.art.errors}}</div>
+            {%endif%}
+         </div>
+         
+         <div class="form-group input-group col-md-12  ">                 
+            <div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+               {{form.year|addcss:"form-control,Første Registreringsdato:,"}}             
+             </div>
+             {% if form.year.errors %} 
+               <div class=" col-md-4 alert-warning" >{{form.year.errors}}</div>
+             {% endif %}
+          </div>              
+                            
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+                   {{form.brand|addcss:"form-control,Mærket:,"}}
+                </div>
+                {% if form.brand.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.brand.errors}}</div>
+             	{% endif %}
+           </div>
+           
+           <h3 class="text-primary col-md-offset-2 ">Kontakt information osv</h3>
+           
+          <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+                   {{form.address|addcss:"form-control,Hvor er bilen/addresse:,"}}
+                </div>
+                {% if form.address.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.address.errors}}</div>
+             	{% endif %}
+           </div>
+          
+                    
+                       
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+                   {{form.city|addcss:"form-control,By:,"}}
+                </div>
+                {% if form.city.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.city.errors}}</div>
+             	{% endif %}
+           </div> 
+           
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+                   {{form.email|addcss:"form-control,Kontakt email(vis ikke på siden):,"}}
+                </div>
+                {% if form.email.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.email.errors}}</div>
+             	{% endif %}
+           </div> 
+           
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-6 col-md-offset-2 ">
+                   {{form.tlf|addcss:"form-control,Telefon:,"}}
+                </div>
+                {% if form.tlf.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.tlf.errors}}</div>
+             	{% endif %}
+           </div>       
+                  
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-4 col-md-offset-2">
+                   <h4>Ønskes afhentning: </h4>
+                </div>
+           		<div class=" input-group-lg  col-md-1 ">
+                   {{form.pickup|addcss:"form-control,Afhentning:,"}}
+                </div>
+           </div>    
+           
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-4 col-md-offset-2 ">
+                  <h4>Hvor mange dage, skal din bil være i auktion:</h4>
+                </div>
+           		<div class=" input-group-lg  col-md-2  ">
+                   {{form.duration|addcss:"form-control,Hvor mange dage, skal din bil være i auktion:,"}}
+                </div>
+                {% if form.city.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.duration.errors}}</div>
+             	{% endif %}
+           </div>  
+           
+             <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-3 col-md-offset-2 ">
+                  <h4>Billede af bilen(valgfri):</h4>
+                </div>
+           		<div class=" input-group-lg  col-md-3  ">
+                   {{form.picture|addcss:"form-control, ,"}}
+                </div>
+                {% if form.picture.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.picture.errors}}</div>
+             	{% endif %}
+           </div> 
+           
+           <div class="form-group input-group col-md-12  ">
+           		<div class=" input-group-lg  col-md-4 col-md-offset-2 ">
+                  <h4>Hvilket område skal ophuggeren være i: <h5>(hold ctrl ind eller cmd på mac for at vælge flere)</h5>:</h4>
+                </div>
+           		<div class=" input-group-lg  col-md-3  ">
+                   {{form.bid_area}}
+                </div>
+                {% if form.bid_area.errors %} 
+               		<div class=" col-md-4 alert-warning" >{{form.bid_area.errors}}</div>
+             	{% endif %}
+           </div> 
+           
+           <div class="col-md-offset-2 col-md-6 ">
+		     <p> {{form.accpetTerms}} Jeg accepterer <a href="#brugervilkår" data-toggle="modal"> brugervilkår og fortrolighedspolitik</a></p>
+		     </div>
+		     {% if form.accpetTerms.errors %}  
+			     	<div class=" col-md-4 alert-warning ">{{form.accpetTerms.errors}}</div>
+		      {%endif%} 
+                            
+           <div class="form-group col-sm-offset-6 col-sm-2"">
+                 <button type="submit" class="btn btn-warning" >Set på auktion</button>
+            </div>
+      </form>
+{% endblock %}

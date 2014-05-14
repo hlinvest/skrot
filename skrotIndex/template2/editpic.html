@@ -1,0 +1,34 @@
+{% extends "profile.html"%}
+
+{% block title %}
+{{ao.company}}s profil billede
+{% endblock %}
+
+{% block content %}
+<div class="userprofile">
+<h4><a href="/profil/" >Tilbage til profil</a></h4> 
+<h3>Du kan tilføje eller ændre din virksomheds billede her</h3>
+<h4 class="text-warning">{{text}}</h4>
+<div class="text-info">Dit nuværrende profil billede er: </div>
+<br>
+ <form action="" method="post" enctype="multipart/form-data" >
+ 	{% csrf_token %} 
+ 	
+		{% if not ao.picture %}
+			<p class="text-danger">Du har ikke noget profil billede.</p>
+		{% else%}
+			<img src="{{MEDIA_URL}}{{ao.picture}}" width="400" height="400">
+		
+		{% endif %}
+ 		{% if form.picture.errors %}  <span>{{ao.picture.errors}}  </span>{%endif%}
+		<p><label for="id_picture">Du kan ændre eller tilføje et nyt profil billede her:</label>{{form.picture}}</p>
+</div>
+<div class="userpicture"></div>
+<div class="userbid">	
+	<input type="submit" name="delete" value="Slet" />
+	<input type="submit" name="change" value="Ændre/upload" />
+	{{ form.errors }}
+</form>
+
+</div>	 
+{% endblock %}

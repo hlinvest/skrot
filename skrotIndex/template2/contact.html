@@ -1,0 +1,58 @@
+{% extends "ophugger.html"%}
+{% block meta %}
+    <title>Kontakt os </title>
+    <meta name="description" content="">
+{% endblock %}
+{% block carousel %}
+<div class="replacement"></div>
+{% endblock %}
+{% block content %}
+<h1>{{text}}</h1>
+<br>
+<div class="col-md-4">
+<h3>Send os en besked!</h3>
+<hr>
+<address>
+<strong>Email:</strong> <a href="mailto: info@skrotindex.dk"> info@skrotindex.dk</a><br><br>
+<strong>Phone:</strong> (555)123-4567
+</address>
+</div>
+{% load menu_tags %}
+  <form method="post" >
+  {% csrf_token %} 
+	<form id="contact" method="post" class="form" role="form">
+		<div class="form-group input-group col-md-8  ">
+        	<div class="col-md-5 input-group-lg">
+            	{{form.name|addcss:"form-control,Dit navn:,"}}
+            </div>
+            {% if form.name.errors %}  
+	             <div class=" col-md-3 alert-warning ">{{form.name.errors}}</div>
+            {%endif%}
+        </div>
+          
+         <div class="form-group input-group col-md-8  ">
+            <div class="col-md-5 input-group-lg">
+            	{{form.email|addcss:"form-control,Email:,"}}
+            </div>
+            {% if form.email.errors %}  
+	             <div class=" col-md-3 alert-warning ">{{form.email.errors}}</div>
+            {%endif%}
+           </div>
+           
+          <div class="form-group input-group col-md-8  "> 
+            <div class="col-md-5 ">
+            	{{form.body|addcss:"form-control,Din besked:,5"}}
+            </div>
+            {% if form.body.errors %}  
+	             <div class=" col-md-3 alert-warning ">{{form.body.errors}}</div>
+            {%endif%}
+		</div>
+		
+		<div class="form-group col-sm-offset-6 col-sm-2"">
+                 <button type="submit" class="btn btn-info" >Send besked</button>
+         </div>
+</form>
+</div>
+  
+  
+ {% endblock %}

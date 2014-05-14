@@ -1,0 +1,45 @@
+{% extends "profile.html"%}
+
+{% block title %}
+Vil du slette din profil i autoIndex.dk?
+{% endblock %}
+
+
+{% block content %}
+<h4 class="text-warning">{{text}}</h4>
+<h4>Hvis du ønske at inaktivere din profil, så send os venligst en email og fortæl os hvorfor: </h4>
+{% load menu_tags %}
+  <form method="post" >
+  {% csrf_token %} 
+	<form id="contact" method="post" class="form" role="form">
+		<div class="form-group input-group col-md-8 col-md-offset-4  ">
+        	<div class=" col-md-5 input-group-lg">
+            	{{form.name|addcss:"form-control,Dit navn:,"}}
+            </div>
+            {% if form.name.errors %}  
+	             <div class=" col-md-3 alert-warning ">{{form.name.errors}}</div>
+            {%endif%}
+         </div>
+          
+           
+          <div class="form-group input-group col-md-8 col-md-offset-4 "> 
+            <div class="col-md-5 ">
+            	{{form.body|addcss:"form-control,Din besked:,5"}}
+            </div>
+            {% if form.body.errors %}  
+	             <div class=" col-md-3 alert-warning ">{{form.body.errors}}</div>
+            {%endif%}
+		</div>
+		
+		<div class="form-group col-sm-offset-6 col-sm-2"">
+                 <button type="submit" class="btn btn-info" >Send besked</button>
+         </div>
+</form>
+
+ 
+<br>
+<br>
+<h4>Hvis du er sikker, så tryk på: 
+ <a href="/slet_profil/"> <button name="slet_profil">Slet</button> </a> </h4>
+ <div class="replacement"></div>
+ {% endblock %}

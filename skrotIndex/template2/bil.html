@@ -1,0 +1,62 @@
+{% extends "skrot_biler.html" %}
+{% block meta %}
+    <title>byd på {{car.brand}} fra {{car.year}} </title>
+    <meta name="description" content="skrotbil {{ car.brand}} fra {{car.year}} er sat til salg i {{car.city}}.">
+{% endblock %}
+{% block rightBody %}
+{% load staticfiles %}
+
+	<div class=" col-md-5">
+	  <h1 class="text-info">Aktioner:  {{car.brand}} fra {{car.year}}</h1>
+	
+	  	<h4>Nummerplade: {{car.plate}}</h4>
+		<h4>Mærke: {{car.brand}}</h4>
+		<h4>Årgang: {{car.year}}</h4>
+		<h4>Adresse: {{car.address}}</h4>
+		<h4>By: {{car.city}}</h4>
+		<h4>Ønskes afhentning: {% if car.pickup %}Ja tak{% else %} Nej {% endif %}</h4>
+	</div>
+	<div class="col-md-3 ">
+    	{% if not car.picture %}
+    		<img src="{% static 'intetfoto.jpg' %}" /></td>
+		{% else %} 
+	
+			<a href="{{MEDIA_URL}}{{car.picture}}">
+			<img src="{{MEDIA_URL}}{{car.picture}}" width="300" height="250" alt="{{car.brand}},{{car.plate}}, {{car.year}}"/>
+			</a>
+		{% endif %} 
+  	</div>
+  	
+  	<div class=" col-md-6">
+	  	<h3 >Denne auktion startede <span class="text-danger">{{car.start_time }}</span> <br> Slutter <span class="text-danger">{{car.end_time}}</spasn></h3> </p>
+		<p>{{text}}</p>
+		<table class="table">
+				<tr><th>Autoophugger</th>  <th>bud</th></tr>
+			{% if not bid %}
+				<tr><td> Du kan være den første til at byde på den</td><td></td></tr>
+			{% else %}
+				{% for b in bid %}
+					<tr><td>{{b.ao.company}}</td>  <td>{{b.price}}</td></tr>
+				{% endfor %}
+			{% endif %}
+		</table>
+			
+			{% if expired %}
+			<h3>Denne auktion er sluttet.</h3>
+			{% else%}
+					{% if user.is_authenticated %}
+					<h4>Afgiv din byd </h4>
+			 			<form action="" method="post">
+			 			{% csrf_token %} 
+			 				{% if form.price.errors %}<span color="red"> {{form.price.errors}}</span>{% endif %}
+			 				{{form.car}}
+			 				{{form.price}} <input type="submit" alt="register" class="btn btn-success" value="Din byd">
+			 			 </form>
+			 		{% else %}
+					<h3> Log ind <a href="/login/{{car.slug}}">her</a> og giv et bud. </h3>
+			 		{% endif %}
+			 {% endif %}
+	</div>
+  	
+  	
+{% endblock %}
